@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MediatorListenData" load_steps=2 format=3 uid="uid://bxsermuo0g51"]
+
+[ext_resource type="Script" uid="uid://d26ayrxcb8mrc" path="res://scripts/data/madiator_listen_data.gd" id="1_7snsw"]
+
+[resource]
+script = ExtResource("1_7snsw")
+beam_color = Color(0.8916536, 0.58005273, 0.28831506, 0.9019608)
+max_listen_distance = 200.0
+metadata/_custom_type_script = "uid://d26ayrxcb8mrc"

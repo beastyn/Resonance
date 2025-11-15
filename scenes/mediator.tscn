@@ -1,0 +1,61 @@
+[gd_scene load_steps=12 format=3 uid="uid://bbr7rvs1wsw1w"]
+
+[ext_resource type="Script" uid="uid://ks0v2vab01b5" path="res://scripts/mediator.gd" id="1_xwoyl"]
+[ext_resource type="PackedScene" uid="uid://ciwcx6qew4ko" path="res://scenes/components/limited_cursor_follower_component.tscn" id="2_xwoyl"]
+[ext_resource type="PackedScene" uid="uid://bp12invtmprfu" path="res://scenes/components/listen_action_component.tscn" id="3_m4slx"]
+[ext_resource type="PackedScene" uid="uid://brtgw7u7sisdv" path="res://scenes/components/replicate_wave_component.tscn" id="4_vckn2"]
+[ext_resource type="Script" uid="uid://c0d5ij51p2g" path="res://scripts/components/sing_action_component.gd" id="5_mkxtl"]
+[ext_resource type="Texture2D" uid="uid://bwoq14g7iqsf0" path="res://assets/mediator.png" id="6_mkxtl"]
+[ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="6_vckn2"]
+[ext_resource type="Resource" uid="uid://ciiwojob8ie02" path="res://scripts/data/replica_wave.tres" id="7_mkxtl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnx73"]
+atlas = ExtResource("6_mkxtl")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xwoyl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnx73")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lnx73"]
+radius = 26.476404
+
+[node name="Mediator" type="Node2D" node_paths=PackedStringArray("limited_follower_component", "listen_action_component", "replicate_wave_component")]
+script = ExtResource("1_xwoyl")
+limited_follower_component = NodePath("LimitedCursorFollowerComponent")
+listen_action_component = NodePath("ListenActionComponent")
+replicate_wave_component = NodePath("ReplicateWaveComponent")
+
+[node name="LimitedCursorFollowerComponent" parent="." instance=ExtResource("2_xwoyl")]
+max_distance = 100.0
+
+[node name="ListenActionComponent" parent="." instance=ExtResource("3_m4slx")]
+
+[node name="ReplicateWaveComponent" parent="." node_paths=PackedStringArray("area_to_spawn_replica") instance=ExtResource("4_vckn2")]
+area_to_spawn_replica = NodePath("../WaveArea")
+amplitude_change_step = 10.0
+
+[node name="SingActionComponent" type="Node" parent="." node_paths=PackedStringArray("area_to_sing_from")]
+script = ExtResource("5_mkxtl")
+area_to_sing_from = NodePath("../WaveArea")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_xwoyl")
+animation = &"idle"
+
+[node name="WaveArea" parent="." instance=ExtResource("6_vckn2")]
+position = Vector2(-5, 13)
+collision_layer = 8
+default_wave_resource = ExtResource("7_mkxtl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
+position = Vector2(14, 10)
+shape = SubResource("CircleShape2D_lnx73")

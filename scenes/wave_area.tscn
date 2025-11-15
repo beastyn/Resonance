@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3hsk82kmoi5h"]
+
+[ext_resource type="Script" uid="uid://d13sfn67yt8i8" path="res://scripts/wave_area.gd" id="1_fc2wy"]
+
+[node name="WaveArea" type="Area2D" groups=["wave_areas"]]
+collision_layer = 4
+script = ExtResource("1_fc2wy")

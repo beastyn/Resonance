@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brtgw7u7sisdv"]
+
+[ext_resource type="Script" uid="uid://b1mlnu6pdo1x8" path="res://scripts/components/replicate_wave_component.gd" id="1_85ofo"]
+
+[node name="ReplicateWaveComponent" type="Node"]
+script = ExtResource("1_85ofo")

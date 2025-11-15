@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp12invtmprfu"]
+
+[ext_resource type="Script" uid="uid://b3h6tigowm74n" path="res://scripts/components/listen_action_component.gd" id="1_ke745"]
+[ext_resource type="Resource" uid="uid://bxsermuo0g51" path="res://scripts/data/mediator_listen_data.tres" id="2_f5dfs"]
+
+[node name="ListenActionComponent" type="Node"]
+script = ExtResource("1_ke745")
+mediator_listen_data = ExtResource("2_f5dfs")

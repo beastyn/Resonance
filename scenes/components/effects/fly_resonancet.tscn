@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmputatkre0cq"]
+
+[ext_resource type="Script" uid="uid://c3y6mjv6ttd4c" path="res://scripts/effects/fly_resonance.gd" id="1_a2t03"]
+
+[node name="FlyEffect" type="Node"]
+script = ExtResource("1_a2t03")

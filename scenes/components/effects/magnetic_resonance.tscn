@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx7whga4oygyq"]
+
+[ext_resource type="Script" uid="uid://emtf1h8qx4ns" path="res://scripts/effects/magnetic_resonance.gd" id="1_28psm"]
+
+[node name="MagneticResonance" type="Node"]
+script = ExtResource("1_28psm")

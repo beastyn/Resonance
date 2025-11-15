@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ciwcx6qew4ko"]
+
+[ext_resource type="Script" uid="uid://x051tx01cnmd" path="res://scripts/components/limited_cursor_follower_component.gd" id="1_4h6a7"]
+
+[node name="LimitedCursorFollowerComponent" type="Node"]
+script = ExtResource("1_4h6a7")
+follow_smoothness = 0.1
