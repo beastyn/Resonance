@@ -26,7 +26,7 @@ func set_target_wave_data(wave_data: WaveData) -> void:
 	_new_amplitude = 0.0
 	_new_frequency = 0.0
 	area_to_spawn_replica.set_default_wave_travel_distance(_target_wave_data.travel_distane)
-	emit_signal("need_replica_wave", area_to_spawn_replica, _replica_wave_data, Vector2.ZERO)
+	emit_signal("need_replica_wave", area_to_spawn_replica, _replica_wave_data, Vector2(0.5, 0.5))
 	_particles = area_to_spawn_replica.active_wave_effect
 	_wave_mat = _particles.particles.process_material as ShaderMaterial
 	

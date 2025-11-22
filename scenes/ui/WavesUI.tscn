@@ -1,0 +1,97 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7orksnx4yfkk"]
+
+[ext_resource type="Texture2D" uid="uid://bnetha8b2t0tx" path="res://assets/old/waveparticles.png" id="1_ky0jq"]
+[ext_resource type="Script" uid="uid://cw2gpj7yrlnnv" path="res://scripts/ui/learned_waves_ui.gd" id="1_slm4g"]
+[ext_resource type="Resource" uid="uid://bgs86nahntyoy" path="res://scripts/data/wave_icons.tres" id="2_182a0"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 158.0
+offset_bottom = 70.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" node_paths=PackedStringArray("images_dicrionary")]
+layout_mode = 2
+theme_override_constants/separation = 15
+script = ExtResource("1_slm4g")
+waves_icons = ExtResource("2_182a0")
+images_dicrionary = {
+"enemy": NodePath("Wave3"),
+"floor": NodePath("Wave1"),
+"wall": NodePath("Wave2")
+}
+
+[node name="Wave1" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave1"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Wave2" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave2"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = -25.0
+offset_bottom = 25.0
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Wave3" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave3"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = -25.0
+offset_bottom = 25.0
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+stretch_mode = 4

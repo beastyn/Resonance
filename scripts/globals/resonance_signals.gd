@@ -12,3 +12,7 @@ signal stop_fly_resonace()
 signal start_magnetic_resonance(strength: float, direction: Vector2, attraction_curve: Curve)
 signal update_magnetic_resonance(direction: Vector2)
 signal stop_magnetic_resonance()
+
+signal start_destructuion_resonance(resonance_time: float)
+signal update_destruction_resonance(current_resonance_time: float)
+signal stop_destruction_resonance()

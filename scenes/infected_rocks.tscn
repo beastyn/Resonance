@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://spuqigshbkrh"]
+
+[ext_resource type="Texture2D" uid="uid://ecdtmjaoia6c" path="res://assets/tileset_sheet.png" id="1_653k3"]
+[ext_resource type="Shader" uid="uid://dt3sqcbbucu3c" path="res://assets/infected-sprite.gdshader" id="1_ahqe8"]
+[ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="1_c5xr7"]
+[ext_resource type="PackedScene" uid="uid://b13atej70rga" path="res://scenes/components/effects/destruction_resonance.tscn" id="2_653k3"]
+[ext_resource type="Resource" uid="uid://nqg1pq8mgpr6" path="res://scripts/data/rocks_wave.tres" id="3_apeoc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ahqe8"]
+size = Vector2(200, 291)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ahqe8"]
+shader = ExtResource("1_ahqe8")
+shader_parameter/tint_color = Color(0.5411765, 0.07058824, 0.08235294, 0.5137255)
+shader_parameter/mix_tint = 0.570000027075
+shader_parameter/side_top = 0.3830000181925
+shader_parameter/side_right = 0.430000020425
+shader_parameter/side_bottom = 0.4490000213275
+shader_parameter/side_left = 1.0
+shader_parameter/thickness_px = 75.290003576275
+shader_parameter/soften_px = 22.7290010796275
+shader_parameter/pulse_speed = 20.00000095
+shader_parameter/pulse_freq = 40.0
+shader_parameter/pulse_amp = 0.0750000035625
+shader_parameter/edge_fade = 2.50000011875
+shader_parameter/noise_seed = 5.538000263055
+shader_parameter/distortion_strength = 7.47600035511
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apeoc"]
+atlas = ExtResource("1_653k3")
+region = Rect2(1201, 304, 199, 299)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r2wx1"]
+size = Vector2(200, 297)
+
+[node name="InfectedDoor" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_ahqe8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ahqe8")
+texture = SubResource("AtlasTexture_apeoc")
+
+[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect") instance=ExtResource("1_c5xr7")]
+default_wave_resource = ExtResource("3_apeoc")
+resonance_effect = NodePath("DestructionResonance")
+
+[node name="DestructionResonance" parent="WaveArea" node_paths=PackedStringArray("parent_node", "sprite") instance=ExtResource("2_653k3")]
+resonance_time = 3.0
+parent_node = NodePath("../..")
+sprite = NodePath("../../Sprite2D")
+change_speed = 20.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_r2wx1")

@@ -4,6 +4,9 @@ class_name MediatorControllerComponent
 func ask_to_listen(center: Node2D) -> void:
 	PlayerSignals.emit_signal("want_to_listen", center.global_position)
 
+func ask_to_stop_listen() -> void:
+	PlayerSignals.emit_signal("want_to_stop_listen")
+
 func ask_to_activate_wave(wave_data: WaveData) -> void:
 	PlayerSignals.emit_signal("want_to_activate_wave", wave_data)
 

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://0gkxpox83pku"]
+
+[ext_resource type="Script" uid="uid://ci150h6ab1aqq" path="res://scripts/enemy.gd" id="1_7p1mj"]
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_7p1mj")
+
+[node name="Tentavle" type="Line2D" parent="."]
+position = Vector2(-1, 0)
+scale = Vector2(-2.6705775, -3.5310438)
+points = PackedVector2Array(0, 0, -68.08, -38.765)

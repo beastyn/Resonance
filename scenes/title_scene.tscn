@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmu6eg1knl1gl"]
+
+[ext_resource type="Script" uid="uid://de2gr0xl5oyj7" path="res://scripts/title_scene.gd" id="1_6jsh8"]
+
+[node name="TitleScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6jsh8")
+
+[node name="StartGame" type="Button" parent="."]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 109.0
+offset_right = 309.0
+offset_bottom = 163.0
+text = "Start Resonate"
+
+[node name="QuitGame" type="Button" parent="."]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 206.0
+offset_right = 310.0
+offset_bottom = 260.0
+text = "Quit"
+
+[connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="QuitGame" to="." method="_on_quit_game_pressed"]

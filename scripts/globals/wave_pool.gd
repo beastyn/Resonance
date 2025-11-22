@@ -24,7 +24,7 @@ func release(wave: Node2D, parent: Node2D) -> void:
 	if wave.has_method("reset_effect"): wave.reset_effect()
 	_pool.append(wave)
 	parent.remove_child(wave)
-	add_child(wave)
+	add_child.call_deferred(wave)
 	
 func _createPooledObject() -> void:
 	var wave = wave_scene.instantiate() as Node2D

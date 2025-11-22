@@ -6,4 +6,6 @@
 script = ExtResource("1_7snsw")
 beam_color = Color(0.8916536, 0.58005273, 0.28831506, 0.9019608)
 max_listen_distance = 200.0
+positionong_speed = 250.0
+positioning_rotation_speed = 10.0
 metadata/_custom_type_script = "uid://d26ayrxcb8mrc"

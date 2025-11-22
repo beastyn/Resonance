@@ -8,13 +8,18 @@ signal stop_listening_wave(wave_area: WaveArea)
 
 var beam_width: float = 4.0
 var beam_color: Color = Color(0.2,0.7,1.0,0.9)
-var max_Listen_Distance: float = 50.0
+var max_listen_distance: float = 50.0
 
-var mediator: Node2D
+var mediator: CharacterBody2D
 var beam_line: Line2D
 
 var _is_listening: bool = false;
 var _listen_to_wave: Node2D
+
+var _listening_wave_position: Vector2
+var _listen_velocity := Vector2.ZERO
+var _listen_rotation := 0.0
+var _previous_rotation: float = INF
 
 func _ready() -> void:
 	mediator = get_parent()
@@ -24,19 +29,45 @@ func _ready() -> void:
 	beam_line.default_color = mediator_listen_data.beam_color
 	beam_line.z_index = 1000
 	beam_line.visible = false	
-	max_Listen_Distance = mediator_listen_data.max_listen_distance
+	max_listen_distance = mediator_listen_data.max_listen_distance
 		
 	PlayerSignals.want_to_listen.connect(_on_want_to_listen)
+	PlayerSignals.want_to_stop_listen.connect(_on_want_to_stop_listen)
+
+func apply_listening_position() -> void:	
+	var wave = (_listen_to_wave as WaveArea).get_wave_data()
+	var position = _listening_wave_position + wave.direction * (wave.travel_distane + mediator_listen_data.listen_position_delta)
+	var direction = position - mediator.global_position	
+
+	if direction.length() < 10.0:  # Small threshold to stop
+		_listen_velocity = Vector2.ZERO
+		return	
+	_listen_velocity = direction.normalized() * mediator_listen_data.positionong_speed
+	mediator.velocity = _listen_velocity
+	mediator.move_and_slide()
+
+func apply_listening_rotation(delta:float) -> void:
+	if _previous_rotation == INF: _previous_rotation = mediator.rotation
+	var wave = (_listen_to_wave as WaveArea).get_wave_data()
+	var rotation = wave.direction.angle()	
+	mediator.rotation = lerp_angle(mediator.rotation, rotation, delta * mediator_listen_data.positioning_rotation_speed)
+
+func reset_position_and_rotatopn(delta:float) -> void:
+	mediator.rotation = lerp_angle(mediator.rotation, _previous_rotation, delta * mediator_listen_data.positioning_rotation_speed)
+	_previous_rotation = INF	
 	
 func _on_want_to_listen(player_position: Vector2) -> void:
 	_listen_at_point(player_position)
+
+func _on_want_to_stop_listen() -> void:
+	if(_is_listening):
+		_stop_listen()	
 	
 func _listen_at_point(player_origin: Vector2):
 	if(_is_listening):
-		emit_signal("stop_listening_wave", _listen_to_wave as WaveArea)
-		_is_listening = false
+		_stop_listen()
 		return
-		
+				
 	# Do physics raycast that can hit Areas (set collide_with_areas = true)
 	var origin = _get_beam_origin()
 	var ray_end := _get_ray_end(player_origin)
@@ -56,10 +87,11 @@ func _listen_at_point(player_origin: Vector2):
 	if hit_collider and hit_collider is Area2D and hit_collider.has_method("get_wave_data"):
 		_is_listening = true;
 		_request_wave_emit(hit_collider, hit_pos)		
+		_listening_wave_position = hit_pos
 		
 		# compute ray end for a given max_range
 func _get_ray_end(player_global: Vector2) -> Vector2:
-	return max_Listen_Distance * _get_beam_dir(player_global) + _get_beam_origin() 
+	return _get_beam_origin() + (mediator.get_global_mouse_position() -_get_beam_origin()).normalized() * max_listen_distance
 
 func _get_beam_origin() -> Vector2:
 	return mediator.global_position
@@ -78,3 +110,9 @@ func _request_wave_emit(area: Area2D, pos: Vector2) -> void:
 	wave_data = area.get_wave_data()
 	_listen_to_wave = area as Node2D
 	emit_signal( "listening_wave", area as WaveArea, wave_data, pos)
+
+func _stop_listen() -> void:
+	emit_signal("stop_listening_wave", _listen_to_wave as WaveArea)
+	_is_listening = false
+	mediator.rotation = _previous_rotation
+	_previous_rotation = INF

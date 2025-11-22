@@ -22,5 +22,6 @@ func _on_want_to_sing(mouse_position: Vector2, wave_data: WaveData) -> void:
 		area_to_sing_from.update_active_wave(area_to_sing_from.global_position, (mouse_position - area_to_sing_from.global_position).normalized())
 
 func _on_want_to_stop_sing() -> void:
+	if !is_singing: return
 	area_to_sing_from.stop_emitting_wave()
 	is_singing=false

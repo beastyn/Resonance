@@ -1,5 +1,6 @@
 extends Node
 
+signal wave_learnt(wave_name: String)
 # dictionary to store clones keyed by name
 var presets: Dictionary = {}
 
@@ -13,7 +14,10 @@ func save_wave(name: String, wave: WaveData) -> void:
 	# optionally override color
 	#if color_override:
 		#clone.color = color_override
-	presets[name] = clone
+	if !presets.has(name):
+		presets[name] = clone
+		emit_signal("wave_learnt", name)
+	
 	print("Wave saved:", name)
 
 # Retrieve a stored wave (returns clone to avoid external modifications)

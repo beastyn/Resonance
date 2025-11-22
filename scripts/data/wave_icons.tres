@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="WavesIcons" load_steps=6 format=3 uid="uid://bgs86nahntyoy"]
+
+[ext_resource type="Script" uid="uid://cvbey2ugtfqos" path="res://scripts/data/waves_icons.gd" id="1_rul3i"]
+[ext_resource type="Texture2D" uid="uid://bywey8ul0shi2" path="res://assets/ui/icons.png" id="2_lpt58"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrejy"]
+atlas = ExtResource("2_lpt58")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lpt58"]
+atlas = ExtResource("2_lpt58")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiobt"]
+atlas = ExtResource("2_lpt58")
+region = Rect2(100, 0, 100, 100)
+
+[resource]
+script = ExtResource("1_rul3i")
+waves_name_to_icon = Dictionary[String, Texture]({
+"enemy": SubResource("AtlasTexture_rrejy"),
+"floor": SubResource("AtlasTexture_lpt58"),
+"wall": SubResource("AtlasTexture_oiobt")
+})
+metadata/_custom_type_script = "uid://cvbey2ugtfqos"
