@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AudioCollection" load_steps=3 format=3 uid="uid://c51jnt02tpox2"]
+
+[ext_resource type="Script" uid="uid://bi5firta231ee" path="res://scripts/data/audio_collections/audio_collection.gd" id="1_xogr7"]
+[ext_resource type="AudioStream" uid="uid://hah6prrhbxjs" path="res://assets/audio/player/jump_up.mp3" id="2_mk5uk"]
+
+[resource]
+script = ExtResource("1_xogr7")
+streams = Array[AudioStream]([ExtResource("2_mk5uk")])
+metadata/_custom_type_script = "uid://bi5firta231ee"

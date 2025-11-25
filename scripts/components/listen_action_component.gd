@@ -2,9 +2,11 @@ extends Node
 class_name ListenActionComponent
 
 signal listening_wave(wave_area: WaveArea, wave_data: WaveData, position: Vector2)
+signal is_listening()
 signal stop_listening_wave(wave_area: WaveArea)
 
 @export var mediator_listen_data: MediatorListenData 
+@onready var game_manager: GameManager = $"../../GameManager"
 
 var beam_width: float = 4.0
 var beam_color: Color = Color(0.2,0.7,1.0,0.9)
@@ -21,6 +23,8 @@ var _listen_velocity := Vector2.ZERO
 var _listen_rotation := 0.0
 var _previous_rotation: float = INF
 
+var _light_tween: Tween
+
 func _ready() -> void:
 	mediator = get_parent()
 	beam_line = Line2D.new()
@@ -36,7 +40,9 @@ func _ready() -> void:
 
 func apply_listening_position() -> void:	
 	var wave = (_listen_to_wave as WaveArea).get_wave_data()
-	var position = _listening_wave_position + wave.direction * (wave.travel_distane + mediator_listen_data.listen_position_delta)
+	var wave_global_angle = (_listen_to_wave.global_rotation + wave.direction.angle())
+	var wave_global_dir = Vector2(cos(wave_global_angle), sin(wave_global_angle)).normalized()
+	var position = _listening_wave_position + wave_global_dir * (wave.travel_distane + mediator_listen_data.listen_position_delta)
 	var direction = position - mediator.global_position	
 
 	if direction.length() < 10.0:  # Small threshold to stop
@@ -48,8 +54,9 @@ func apply_listening_position() -> void:
 
 func apply_listening_rotation(delta:float) -> void:
 	if _previous_rotation == INF: _previous_rotation = mediator.rotation
-	var wave = (_listen_to_wave as WaveArea).get_wave_data()
-	var rotation = wave.direction.angle()	
+	var area = _listen_to_wave as WaveArea
+	var wave = area.get_wave_data()
+	var rotation = _listen_to_wave.global_rotation + wave.direction.angle()
 	mediator.rotation = lerp_angle(mediator.rotation, rotation, delta * mediator_listen_data.positioning_rotation_speed)
 
 func reset_position_and_rotatopn(delta:float) -> void:
@@ -61,13 +68,12 @@ func _on_want_to_listen(player_position: Vector2) -> void:
 
 func _on_want_to_stop_listen() -> void:
 	if(_is_listening):
-		_stop_listen()	
+		_stop_listen()		
 	
 func _listen_at_point(player_origin: Vector2):
 	if(_is_listening):
 		_stop_listen()
-		return
-				
+		return			
 	# Do physics raycast that can hit Areas (set collide_with_areas = true)
 	var origin = _get_beam_origin()
 	var ray_end := _get_ray_end(player_origin)
@@ -88,6 +94,8 @@ func _listen_at_point(player_origin: Vector2):
 		_is_listening = true;
 		_request_wave_emit(hit_collider, hit_pos)		
 		_listening_wave_position = hit_pos
+		emit_signal("is_listening")
+		game_manager.enable_freeze()	
 		
 		# compute ray end for a given max_range
 func _get_ray_end(player_global: Vector2) -> Vector2:
@@ -113,6 +121,7 @@ func _request_wave_emit(area: Area2D, pos: Vector2) -> void:
 
 func _stop_listen() -> void:
 	emit_signal("stop_listening_wave", _listen_to_wave as WaveArea)
+	game_manager.disable_freeze()	
 	_is_listening = false
 	mediator.rotation = _previous_rotation
 	_previous_rotation = INF

@@ -9,8 +9,6 @@ var animation_state: AnimationNodeStateMachinePlayback
 enum State {Walk, Jump, Fall}
 
 var current_State: State = State.Walk
-var _last_facing = 1.0
-var _last_velocity_y : float = 0.0
 
 func _ready() -> void:
 	animation_tree.active = true
@@ -37,8 +35,7 @@ func update_air(on_ground: bool, up_direction : float) -> void:
 	if !on_ground && up_direction > 0  && current_State != State.Fall:
 			animation_state.travel("fall")
 			current_State = State.Fall
-			
-	print(current_State)
+
 
 
 

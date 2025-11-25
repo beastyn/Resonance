@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcn67q5m76yr4"]
+
+[ext_resource type="Script" uid="uid://ci150h6ab1aqq" path="res://scripts/tentacle.gd" id="1_spd53"]
+
+[node name="Tentacle" type="Node2D" node_paths=PackedStringArray("tentacle", "areas_parent")]
+script = ExtResource("1_spd53")
+tentacle = NodePath("Tentacle2")
+width = 5.0
+areas_parent = NodePath("Areas")
+
+[node name="Areas" type="Node" parent="."]
+
+[node name="Tentacle2" type="Line2D" parent="."]
+scale = Vector2(2.6705775, 3.5310438)

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ypsrv1u1vbqp"]
+
+[ext_resource type="Script" uid="uid://xqfo3ledsldb" path="res://scripts/components/audio_component.gd" id="1_4t6hf"]
+
+[sub_resource type="AudioStreamMP3" id="AudioStreamMP3_fjrip"]
+
+[node name="AudioComponent" type="Node" node_paths=PackedStringArray("audio_player")]
+script = ExtResource("1_4t6hf")
+audio_player = NodePath("StepsPlayer")
+
+[node name="StepsPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamMP3_fjrip")
+volume_db = -13.0

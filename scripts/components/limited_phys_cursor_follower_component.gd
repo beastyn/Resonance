@@ -37,8 +37,6 @@ func move(origin: Vector2, character: CharacterBody2D, deltaTime: float, sprite:
 	character.velocity = _velocity
 	if need_teleport: character.global_position = _limit_center.global_position
 	character.move_and_slide()	
-	#sprite.rotation = _sprite_direction.angle()
-	#sprite.flip_h = true if _velocity.x < 0.0 else false
 		
 func _calc_target_direction(origin: Vector2, delta: float) -> bool: 
 	#first, coun how far cursor from a center so we can position in min-max limits
@@ -53,8 +51,7 @@ func _calc_target_direction(origin: Vector2, delta: float) -> bool:
 	if _last_center_position == Vector2.INF:
 		_last_center_position = center_global
 	var center_vel = (center_global - _last_center_position) / delta
-	_last_center_position = center_global
-	
+	_last_center_position = center_global	
 	
 	if (center_global - origin).length() > max_distance +100:
 		_velocity = Vector2.ZERO
@@ -62,12 +59,6 @@ func _calc_target_direction(origin: Vector2, delta: float) -> bool:
 	
 	if raw_distance > max_distance:
 		target = center_global + raw_target_offset.normalized() * max_distance
-
-	#var mouse_moved = true
-#
-	#if _last_mouse_pos != Vector2.INF:
-		#mouse_moved = (_last_mouse_pos.distance_to(raw_target) > _still_mouse_movement)
-	#_last_mouse_pos = raw_target 
 	
 	var local_mouse_move = true
 	if _last_local_mouse_pos != Vector2.INF:

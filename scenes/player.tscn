@@ -1,11 +1,13 @@
-[gd_scene load_steps=36 format=3 uid="uid://82yawaxjl0c7"]
+[gd_scene load_steps=39 format=3 uid="uid://82yawaxjl0c7"]
 
 [ext_resource type="Script" uid="uid://d31epwq3c4afl" path="res://scripts/player.gd" id="1_qlg0r"]
 [ext_resource type="SpriteFrames" uid="uid://dj2yelar2cqlf" path="res://assets/old/player.tres" id="2_g2els"]
 [ext_resource type="PackedScene" uid="uid://c3u0nxn17yu5q" path="res://scenes/components/velocity_component.tscn" id="2_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://mf1b6kvdn8bx" path="res://scenes/components/mediator_controller_component.tscn" id="3_tuyoq"]
 [ext_resource type="Script" uid="uid://bv8admow0rxfu" path="res://scripts/components/animation_component.gd" id="4_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://bglgvedavj75s" path="res://scenes/components/damaged_component.tscn" id="5_fjrip"]
 [ext_resource type="Script" uid="uid://bjy5kua8k4m7q" path="res://scripts/components/respawn_component.gd" id="5_tuyoq"]
+[ext_resource type="Script" uid="uid://xqfo3ledsldb" path="res://scripts/components/audio_component.gd" id="8_smehm"]
 
 [sub_resource type="Curve" id="Curve_qlg0r"]
 _data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(0.52444446, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -14,6 +16,8 @@ point_count = 3
 [sub_resource type="Curve" id="Curve_dqkch"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.79775286), 1.1967089, 1.1967089, 0, 0, Vector2(0.15023474, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.11396467, 0.0, 0, 0]
 point_count = 4
+
+[sub_resource type="AudioStreamMP3" id="AudioStreamMP3_fjrip"]
 
 [sub_resource type="Animation" id="Animation_qlg0r"]
 length = 0.001
@@ -468,7 +472,7 @@ graph_offset = Vector2(222.04782, 4)
 radius = 58.0
 height = 204.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("velocity_component", "mediator_controller_component", "animation_component", "respawn_component") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("velocity_component", "mediator_controller_component", "animation_component", "damaged_component", "respawn_component", "audio_component") groups=["player"]]
 z_index = 5
 collision_layer = 2
 floor_stop_on_slope = false
@@ -478,7 +482,9 @@ script = ExtResource("1_qlg0r")
 velocity_component = NodePath("VelocityComponent")
 mediator_controller_component = NodePath("MediatorControllerComponent")
 animation_component = NodePath("AnimationComponent")
+damaged_component = NodePath("DamagedComponent")
 respawn_component = NodePath("RespawnComponent")
+audio_component = NodePath("AudioComponent")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("2_qlg0r")]
 decelerationSpeed = 6.0
@@ -492,8 +498,19 @@ script = ExtResource("4_qlg0r")
 animation_tree = NodePath("../AnimationTree")
 sprite = NodePath("../AnimatedSprite2D")
 
+[node name="DamagedComponent" parent="." node_paths=PackedStringArray("sprite_to_blink") instance=ExtResource("5_fjrip")]
+sprite_to_blink = NodePath("../AnimatedSprite2D")
+
 [node name="RespawnComponent" type="Node" parent="."]
 script = ExtResource("5_tuyoq")
+
+[node name="AudioComponent" type="Node" parent="." node_paths=PackedStringArray("audio_player")]
+script = ExtResource("8_smehm")
+audio_player = NodePath("StepsPlayer")
+
+[node name="StepsPlayer" type="AudioStreamPlayer2D" parent="AudioComponent"]
+stream = SubResource("AudioStreamMP3_fjrip")
+volume_db = -13.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

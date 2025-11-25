@@ -11,7 +11,6 @@ void start(){
 	CUSTOM[0] = 0.0;
 	TRANSFORM[0].xy = vec2(1, 0) * scale_factor;
 	TRANSFORM[1].xy = vec2(0, 1) * scale_factor;
-
 }
 
 void process() {

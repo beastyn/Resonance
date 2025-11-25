@@ -1,7 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3hsk82kmoi5h"]
+[gd_scene load_steps=3 format=3 uid="uid://b3hsk82kmoi5h"]
 
 [ext_resource type="Script" uid="uid://d13sfn67yt8i8" path="res://scripts/wave_area.gd" id="1_fc2wy"]
+[ext_resource type="AudioStream" uid="uid://dyhla353ifem8" path="res://assets/audio/waves/purr_default.mp3" id="2_tykvg"]
 
-[node name="WaveArea" type="Area2D" groups=["wave_areas"]]
+[node name="WaveArea" type="Area2D" node_paths=PackedStringArray("audio_player") groups=["wave_areas"]]
 collision_layer = 4
 script = ExtResource("1_fc2wy")
+audio_player = NodePath("AudioStreamPlayer2D")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_tykvg")
+volume_db = -10.0
+max_distance = 300.0
+attenuation = 0.43527523

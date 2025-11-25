@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AudioCollection" load_steps=5 format=3 uid="uid://cr5qqwnwge1c6"]
+
+[ext_resource type="Script" uid="uid://bi5firta231ee" path="res://scripts/data/audio_collections/audio_collection.gd" id="1_fk51h"]
+[ext_resource type="AudioStream" uid="uid://do88ump85v7b2" path="res://assets/audio/player/step_1.mp3" id="2_yusli"]
+[ext_resource type="AudioStream" uid="uid://da0tvb6raijaa" path="res://assets/audio/player/step_2.mp3" id="3_n4h6d"]
+[ext_resource type="AudioStream" uid="uid://c8s6a5ky6i1tj" path="res://assets/audio/player/step_3.mp3" id="4_24q16"]
+
+[resource]
+script = ExtResource("1_fk51h")
+streams = Array[AudioStream]([ExtResource("2_yusli"), ExtResource("3_n4h6d"), ExtResource("4_24q16")])
+metadata/_custom_type_script = "uid://bi5firta231ee"

@@ -1,0 +1,17 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdrsax33ln10m"]
+
+[ext_resource type="Script" uid="uid://d28u2ar0l2tur" path="res://scripts/globals/audio_manager.gd" id="1_8qd8g"]
+[ext_resource type="Script" uid="uid://bi5firta231ee" path="res://scripts/data/audio_collections/audio_collection.gd" id="2_liach"]
+[ext_resource type="Resource" uid="uid://cr5qqwnwge1c6" path="res://scripts/data/audio_collections/steps.tres" id="3_3asnw"]
+[ext_resource type="Resource" uid="uid://c51jnt02tpox2" path="res://scripts/data/audio_collections/jump_up.tres" id="4_aoitu"]
+[ext_resource type="Resource" uid="uid://cc5hnxkc0shew" path="res://scripts/data/audio_collections/landing.tres" id="5_njtn3"]
+[ext_resource type="Resource" uid="uid://dii5vlg3m0x26" path="res://scripts/data/audio_collections/listen_default.tres" id="6_njtn3"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_8qd8g")
+collections = Dictionary[int, ExtResource("2_liach")]({
+0: ExtResource("3_3asnw"),
+1: ExtResource("4_aoitu"),
+2: ExtResource("5_njtn3"),
+3: ExtResource("6_njtn3")
+})

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AudioCollection" load_steps=3 format=3 uid="uid://dii5vlg3m0x26"]
+
+[ext_resource type="Script" uid="uid://bi5firta231ee" path="res://scripts/data/audio_collections/audio_collection.gd" id="1_o0t47"]
+[ext_resource type="AudioStream" uid="uid://dyhla353ifem8" path="res://assets/audio/waves/purr_default.mp3" id="2_8bqyh"]
+
+[resource]
+script = ExtResource("1_o0t47")
+streams = Array[AudioStream]([ExtResource("2_8bqyh")])
+metadata/_custom_type_script = "uid://bi5firta231ee"

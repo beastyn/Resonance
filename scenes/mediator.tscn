@@ -1,14 +1,14 @@
 [gd_scene load_steps=14 format=3 uid="uid://bbr7rvs1wsw1w"]
 
 [ext_resource type="Script" uid="uid://ks0v2vab01b5" path="res://scripts/mediator.gd" id="1_xwoyl"]
-[ext_resource type="PackedScene" uid="uid://ciwcx6qew4ko" path="res://scenes/components/limited_cursor_follower_component.tscn" id="2_xwoyl"]
 [ext_resource type="Script" uid="uid://bc6ur1byrxr1t" path="res://scripts/components/limited_phys_cursor_follower_component.gd" id="3_lnx73"]
 [ext_resource type="PackedScene" uid="uid://bp12invtmprfu" path="res://scenes/components/listen_action_component.tscn" id="3_m4slx"]
 [ext_resource type="PackedScene" uid="uid://brtgw7u7sisdv" path="res://scenes/components/replicate_wave_component.tscn" id="4_vckn2"]
 [ext_resource type="Script" uid="uid://c0d5ij51p2g" path="res://scripts/components/sing_action_component.gd" id="5_mkxtl"]
+[ext_resource type="Script" uid="uid://xqfo3ledsldb" path="res://scripts/components/audio_component.gd" id="6_lnx73"]
 [ext_resource type="Texture2D" uid="uid://bwoq14g7iqsf0" path="res://assets/mediator.png" id="6_mkxtl"]
 [ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="6_vckn2"]
-[ext_resource type="Resource" uid="uid://ciiwojob8ie02" path="res://scripts/data/replica_wave.tres" id="7_mkxtl"]
+[ext_resource type="Resource" uid="uid://ciiwojob8ie02" path="res://scripts/data/waves/replica_wave.tres" id="7_mkxtl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mkxtl"]
 radius = 22.090721
@@ -31,16 +31,14 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_lnx73"]
 radius = 10.049875
 
-[node name="Mediator" type="CharacterBody2D" node_paths=PackedStringArray("limited_phys_follower_component", "listen_action_component", "replicate_wave_component", "sprite")]
+[node name="Mediator" type="CharacterBody2D" node_paths=PackedStringArray("limited_phys_follower_component", "listen_action_component", "replicate_wave_component", "audio_component", "sprite")]
 collision_layer = 16
 script = ExtResource("1_xwoyl")
 limited_phys_follower_component = NodePath("LimitedPhysCursorFollowerComponent")
 listen_action_component = NodePath("ListenActionComponent")
 replicate_wave_component = NodePath("ReplicateWaveComponent")
+audio_component = NodePath("AudioComponent")
 sprite = NodePath("AnimatedSprite2D")
-
-[node name="LimitedCursorFollowerComponent" parent="." instance=ExtResource("2_xwoyl")]
-max_distance = 100.0
 
 [node name="LimitedPhysCursorFollowerComponent" type="Node" parent="."]
 script = ExtResource("3_lnx73")
@@ -57,6 +55,12 @@ amplitude_change_step = 5.0
 [node name="SingActionComponent" type="Node" parent="." node_paths=PackedStringArray("area_to_sing_from")]
 script = ExtResource("5_mkxtl")
 area_to_sing_from = NodePath("../WaveArea")
+
+[node name="AudioComponent" type="Node" parent="." node_paths=PackedStringArray("audio_player")]
+script = ExtResource("6_lnx73")
+audio_player = NodePath("Voice")
+
+[node name="Voice" type="AudioStreamPlayer2D" parent="AudioComponent"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3, 17)
@@ -75,3 +79,6 @@ default_wave_resource = ExtResource("7_mkxtl")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
 position = Vector2(2, 2)
 shape = SubResource("CircleShape2D_lnx73")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true

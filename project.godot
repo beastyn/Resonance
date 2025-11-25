@@ -21,6 +21,7 @@ WavePool="*res://scripts/globals/wave_pool.gd"
 PlayerSignals="*res://scripts/globals/player_signals.gd"
 WaveStorage="*res://scripts/globals/wave_storage.gd"
 ResonanceSignals="*res://scripts/globals/resonance_signals.gd"
+AudioManager="*res://scenes/audio_manager.tscn"
 
 [display]
 

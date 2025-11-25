@@ -4,14 +4,12 @@
 [ext_resource type="Script" uid="uid://bselcn0wpbc6v" path="res://scripts/components/instant_damage.gd" id="1_qs7in"]
 
 [node name="HarmArea" type="Area2D" node_paths=PackedStringArray("instant_damage_component")]
+collision_mask = 2
 script = ExtResource("1_ju7nu")
 instant_damage_component = NodePath("InstantDamage")
 
-[node name="InstantDamage" type="Node" parent="." node_paths=PackedStringArray("timer")]
+[node name="InstantDamage" type="Node" parent="."]
 script = ExtResource("1_qs7in")
-timer = NodePath("Timer")
-
-[node name="Timer" type="Timer" parent="InstantDamage"]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="timeout" from="InstantDamage/Timer" to="InstantDamage" method="_on_timer_timeout"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

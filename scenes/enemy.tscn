@@ -1,11 +1,72 @@
-[gd_scene load_steps=2 format=3 uid="uid://0gkxpox83pku"]
+[gd_scene load_steps=10 format=3 uid="uid://0gkxpox83pku"]
 
-[ext_resource type="Script" uid="uid://ci150h6ab1aqq" path="res://scripts/enemy.gd" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://buxsy5g688tc3" path="res://scripts/enemy.gd" id="1_7p1mj"]
+[ext_resource type="PackedScene" uid="uid://bcn67q5m76yr4" path="res://scenes/tentacle.tscn" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://bnetha8b2t0tx" path="res://assets/old/waveparticles.png" id="2_c4w8v"]
+[ext_resource type="Shader" uid="uid://dt3sqcbbucu3c" path="res://assets/infected-sprite.gdshader" id="2_nenq2"]
+[ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="4_xwavj"]
+[ext_resource type="PackedScene" uid="uid://b13atej70rga" path="res://scenes/components/effects/destruction_resonance.tscn" id="5_nenq2"]
+[ext_resource type="Resource" uid="uid://nqg1pq8mgpr6" path="res://scripts/data/waves/rocks_wave.tres" id="5_xwavj"]
 
-[node name="Enemy" type="Node2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_md484"]
+shader = ExtResource("2_nenq2")
+shader_parameter/tint_color = Color(0.6, 0.4, 1, 0.22)
+shader_parameter/mix_tint = 0.7
+shader_parameter/side_top = 1.0
+shader_parameter/side_right = 1.0
+shader_parameter/side_bottom = 1.0
+shader_parameter/side_left = 1.0
+shader_parameter/thickness_px = 8.0
+shader_parameter/soften_px = 4.0
+shader_parameter/pulse_speed = 1.6
+shader_parameter/pulse_freq = 10.0
+shader_parameter/pulse_amp = 0.02
+shader_parameter/edge_fade = 0.85
+shader_parameter/noise_seed = 0.0
+shader_parameter/distortion_strength = 6.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_md484"]
+size = Vector2(204, 204)
+
+[node name="Enemy" type="Node2D" node_paths=PackedStringArray("tentacles")]
+z_index = 1
 script = ExtResource("1_7p1mj")
+tentacles = [NodePath("Tentacle"), NodePath("Tentacle2")]
+attack_time = 5.0
+retract_time = 0.2
 
-[node name="Tentavle" type="Line2D" parent="."]
-position = Vector2(-1, 0)
-scale = Vector2(-2.6705775, -3.5310438)
-points = PackedVector2Array(0, 0, -68.08, -38.765)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_md484")
+texture = ExtResource("2_c4w8v")
+region_rect = Rect2(0, 0, 197, 202)
+
+[node name="Tentacle" parent="." instance=ExtResource("1_md0e3")]
+position = Vector2(-55, 63)
+segments_number = 10
+limit_max_length = 10.0
+width = 3.0
+wave_frequency = 10.0
+fire_sec = 5.0
+retract_sec = 5.0
+
+[node name="Tentacle2" parent="." instance=ExtResource("1_md0e3")]
+position = Vector2(55, 60)
+segments_number = 10
+limit_max_length = 10.0
+max_length = 600.0
+width = 3.0
+wave_frequency = 5.0
+fire_sec = 5.0
+retract_sec = 5.0
+
+[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect") instance=ExtResource("4_xwavj")]
+default_wave_resource = ExtResource("5_xwavj")
+resonance_effect = NodePath("DestructionResonance")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_md484")
+
+[node name="DestructionResonance" parent="WaveArea" node_paths=PackedStringArray("parent_node", "sprite") instance=ExtResource("5_nenq2")]
+parent_node = NodePath("../..")
+sprite = NodePath("../../Sprite2D")

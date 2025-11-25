@@ -1,11 +1,10 @@
 [gd_resource type="Resource" script_class="WaveData" load_steps=2 format=3 uid="uid://nqg1pq8mgpr6"]
 
-[ext_resource type="Script" uid="uid://cb0dd6ie4u175" path="res://scripts/data/wave_data.gd" id="1_rhx4v"]
+[ext_resource type="Script" uid="uid://cb0dd6ie4u175" path="res://scripts/data/waves/wave_data.gd" id="1_rhx4v"]
 
 [resource]
 script = ExtResource("1_rhx4v")
 name = "enemy"
-direction = Vector2(-1, 0)
 scale_factor = 0.4
 amplitude = 5.0
 frequency = 5.0

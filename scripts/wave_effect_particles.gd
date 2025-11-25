@@ -4,6 +4,7 @@ class_name WaveEffectParticles
 @export var particles: GPUParticles2D
 @export var area: Area2D
 @export var collider: CollisionShape2D
+@export var lighter: PointLight2D
 
 var _mat: ShaderMaterial
 var  _wave_name: String = "default"
@@ -13,6 +14,8 @@ var _pool_owner: Node = null
 
 var _is_resonance_active: bool = false 
 var _entered_area: Area2D = null
+
+var _light_tween:Tween
 
 func _ready():
 	#ensure we have particles
@@ -29,6 +32,7 @@ func _ready():
 	particles.process_material = _mat
 	
 	collider.disabled = true
+	set_process(false)
 
 func _process(delta: float) -> void:
 	if _is_resonance_active: ResonanceSignals.emit_signal("update_resonance", _entered_area, _mat)
@@ -46,12 +50,15 @@ func setup_from_wave(wave: WaveData, origin: Vector2, direction: Vector2 = Vecto
 	_wave_name = wave.name
 	global_position = origin	
 	particles.emitting = true
-	_setup_collision_area(wave.travel_distane, particles.texture.get_size().x, global_position, calc_direction, needCollision)
+	start_lightup()
+	if needCollision: _setup_collision_area(wave.travel_distane, particles.texture.get_size().x, global_position, calc_direction, needCollision)
 	
 	
 func init_from_pool(wave_area: Node2D, wave_data:WaveData, pos: Vector2, direction: Vector2, needCollision: bool = false )-> void:
 	_set_pool_owner(wave_area)
 	setup_from_wave(wave_data, pos, direction, needCollision)
+	set_process(true)
+
 	
 func update_visuals(pos: Vector2, direction: Vector2) -> void:
 	if(!particles.emitting): return
@@ -59,8 +66,7 @@ func update_visuals(pos: Vector2, direction: Vector2) -> void:
 	area.rotation = direction.angle()
 	
 func hide_wave() -> void:
-	WavePool.release(self, _pool_owner)
-	collider.disabled = true
+	stop_lightup()
 	
 func reset_effect() -> void:
 	# stop emitting and hide; called by pool.release()
@@ -78,6 +84,26 @@ func check_wave_resonance_by_data(other_wave_data: WaveData) -> bool:
 	var amplitude_check = _mat.get_shader_parameter("amplitude") == other_wave_data.amplitude
 	var frequency_check = _mat.get_shader_parameter("frequency") == other_wave_data.frequency
 	return amplitude_check && frequency_check
+
+func start_lightup() -> void:
+	if _light_tween: _light_tween.kill()
+	_light_tween = create_tween()
+	_light_tween.tween_property(lighter, "energy", 1.0, 0.5)
+	
+func stop_lightup() -> void:
+	if !_light_tween.is_valid(): _light_tween.kill()
+	_light_tween = create_tween()	
+	_light_tween.tween_property(lighter, "energy", 0.0, 0.5)
+	_light_tween.finished.connect(_on_light_end_finished)
+	_light_tween.kill()
+	WavePool.release(self, _pool_owner)
+	collider.disabled = true
+	set_process(false)
+	
+func _on_light_end_finished() ->void:
+	_light_tween.finished.disconnect(_on_light_end_finished)
+	_light_tween.kill()
+
 	
 func _set_pool_owner(pool_owner: Node2D) -> void:
 	_pool_owner = pool_owner
