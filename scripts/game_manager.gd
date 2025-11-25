@@ -42,6 +42,7 @@ func _on_stop_listening_wave(wave_area: WaveArea) -> void:
 	if !_canvas_color_change_tween.is_valid(): 
 		_canvas_color_change_tween.kill()
 		_canvas_color_change_tween = create_tween()
+	_canvas_color_change_tween.stop()
 	_canvas_color_change_tween.tween_property(canvas_modulate, "color", _old_canvas_color, 0.5)
 	_canvas_color_change_tween.finished.connect(_on_canvas_tween_finished)
 

@@ -54,10 +54,10 @@ func apply_listening_position() -> void:
 
 func apply_listening_rotation(delta:float) -> void:
 	if _previous_rotation == INF: _previous_rotation = mediator.rotation
-	var area = _listen_to_wave as WaveArea
-	var wave = area.get_wave_data()
-	var rotation = _listen_to_wave.global_rotation + wave.direction.angle()
-	mediator.rotation = lerp_angle(mediator.rotation, rotation, delta * mediator_listen_data.positioning_rotation_speed)
+	#var area = _listen_to_wave as WaveArea
+	#var wave = area.get_wave_data()
+	#var rotation = wave.direction.angle()
+	#mediator.rotation = lerp_angle(mediator.rotation, rotation, delta * mediator_listen_data.positioning_rotation_speed)
 
 func reset_position_and_rotatopn(delta:float) -> void:
 	mediator.rotation = lerp_angle(mediator.rotation, _previous_rotation, delta * mediator_listen_data.positioning_rotation_speed)

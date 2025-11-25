@@ -6,7 +6,11 @@
 [node name="WaveArea" type="Area2D" node_paths=PackedStringArray("audio_player") groups=["wave_areas"]]
 collision_layer = 4
 script = ExtResource("1_fc2wy")
+default_travel_distance = null
 audio_player = NodePath("AudioStreamPlayer2D")
+listen_volume = null
+volume_delta = null
+pitch_delta = null
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_tykvg")

@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cw2gpj7yrlnnv" path="res://scripts/ui/learned_waves_ui.gd" id="1_slm4g"]
 [ext_resource type="Resource" uid="uid://bgs86nahntyoy" path="res://scripts/data/wave_icons.tres" id="2_182a0"]
 
-[node name="Control" type="Control"]
+[node name="WavesUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,8 +27,10 @@ theme_override_constants/separation = 15
 script = ExtResource("1_slm4g")
 waves_icons = ExtResource("2_182a0")
 images_dicrionary = {
-"enemy": NodePath("Wave3"),
+"destroy": NodePath("Wave4"),
+"enemy": NodePath("Wave5"),
 "floor": NodePath("Wave1"),
+"pickup": NodePath("Wave3"),
 "wall": NodePath("Wave2")
 }
 
@@ -81,6 +83,48 @@ texture = ExtResource("1_ky0jq")
 expand_mode = 2
 
 [node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave3"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = -25.0
+offset_bottom = 25.0
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Wave4" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave4"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = -25.0
+offset_bottom = 25.0
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Wave5" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ky0jq")
+expand_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave5"]
 visible = false
 layout_mode = 1
 anchors_preset = -1

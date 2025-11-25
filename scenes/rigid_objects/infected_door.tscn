@@ -4,7 +4,7 @@
 [ext_resource type="Shader" uid="uid://dt3sqcbbucu3c" path="res://assets/infected-sprite.gdshader" id="1_ahqe8"]
 [ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="1_c5xr7"]
 [ext_resource type="PackedScene" uid="uid://b13atej70rga" path="res://scenes/components/effects/destruction_resonance.tscn" id="2_653k3"]
-[ext_resource type="Resource" uid="uid://nqg1pq8mgpr6" path="res://scripts/data/waves/rocks_wave.tres" id="3_apeoc"]
+[ext_resource type="Resource" uid="uid://nqg1pq8mgpr6" path="res://scripts/data/waves/destroy_wave.tres" id="3_apeoc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ahqe8"]
 size = Vector2(200, 291)

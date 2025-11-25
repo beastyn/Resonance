@@ -34,8 +34,8 @@ func _ready():
 	collider.disabled = true
 	set_process(false)
 
-func _process(delta: float) -> void:
-	if _is_resonance_active: ResonanceSignals.emit_signal("update_resonance", _entered_area, _mat)
+func _physics_process(delta: float) -> void:
+	if _is_resonance_active: ResonanceSignals.emit_signal("update_resonance", _entered_area, _mat, delta)
 		
 
 # Ensure a process material exists and duplicate it so each instance can be unique

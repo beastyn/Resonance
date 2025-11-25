@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://dt3sqcbbucu3c" path="res://assets/infected-sprite.gdshader" id="2_nenq2"]
 [ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="4_xwavj"]
 [ext_resource type="PackedScene" uid="uid://b13atej70rga" path="res://scenes/components/effects/destruction_resonance.tscn" id="5_nenq2"]
-[ext_resource type="Resource" uid="uid://nqg1pq8mgpr6" path="res://scripts/data/waves/rocks_wave.tres" id="5_xwavj"]
+[ext_resource type="Resource" uid="uid://nqg1pq8mgpr6" path="res://scripts/data/waves/destroy_wave.tres" id="5_xwavj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_md484"]
 shader = ExtResource("2_nenq2")

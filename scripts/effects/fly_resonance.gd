@@ -9,7 +9,7 @@ func start_resonance(particle_mat: ShaderMaterial) -> void:
 	var _direction = -particle_mat.get_shader_parameter("direction")
 	ResonanceSignals.emit_signal("start_fly_resonance", strength, _direction, ascent_curve, descent_curve)
 
-func update_resonance(particle_mat: ShaderMaterial) -> void:
+func update_resonance(particle_mat: ShaderMaterial, delta:float) -> void:
 	var _direction =-particle_mat.get_shader_parameter("direction")
 	ResonanceSignals.emit_signal("update_fly_resonance", _direction)
 	

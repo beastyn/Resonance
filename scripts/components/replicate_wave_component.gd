@@ -1,7 +1,7 @@
 extends Node
 class_name  ReplicateWaveComponent
 
-signal need_replica_wave(wave_area: WaveArea, wave_data: WaveData, pos: Vector2i)
+signal need_replica_wave(wave_area: WaveArea, wave_data: WaveData, pos: Vector2i, direction: Vector2)
 signal remove_replica_wave(wave_area: WaveArea)
 signal save_replica_wave(wave_data: WaveData)
 signal amlitude_adjusted(direction: float)
@@ -26,12 +26,12 @@ func _ready() -> void:
 	_default_amplitude = _replica_wave_data.amplitude
 	_default_frequency = _replica_wave_data.frequency
 
-func set_target_wave_data(wave_data: WaveData) -> void:
+func set_target_wave_data(wave_data: WaveData, direction: Vector2) -> void:
 	_target_wave_data = wave_data	
 	_new_amplitude = _default_amplitude
 	_new_frequency = _default_frequency
 	area_to_spawn_replica.set_default_wave_travel_distance(_target_wave_data.travel_distane)
-	emit_signal("need_replica_wave", area_to_spawn_replica, _replica_wave_data, Vector2(0.5, 0.5))
+	emit_signal("need_replica_wave", area_to_spawn_replica, _replica_wave_data, Vector2(0.5, 0.5), direction)
 	_particles = area_to_spawn_replica.active_wave_effect
 	_wave_mat = _particles.particles.process_material as ShaderMaterial
 	

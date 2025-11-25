@@ -42,8 +42,8 @@ func  _physics_process(delta: float) -> void:
 		sprite.rotation = 0.0		
 	
 func _on_listening_wave(wave_area : WaveArea, wave_data: WaveData, pos: Vector2) -> void:	
-	wave_area.emit_wave_at_point(pos)
-	replicate_wave_component.set_target_wave_data(wave_data)
+	wave_area.emit_wave_at_point(pos, false, (global_position-pos).normalized())
+	replicate_wave_component.set_target_wave_data(wave_data, (global_position-pos).normalized())
 	_can_move = false
 	
 func _on_stop_listening_wave(wave_area: WaveArea) -> void:
@@ -51,8 +51,8 @@ func _on_stop_listening_wave(wave_area: WaveArea) -> void:
 	replicate_wave_component.stop_replica_wave()
 	_can_move = true
 	
-func _on_need_replica_wave(wave_area: WaveArea, wave_data: WaveData, pos: Vector2) -> void:	
-	wave_area.emit_wave_at_point(wave_area.global_position)
+func _on_need_replica_wave(wave_area: WaveArea, wave_data: WaveData, pos: Vector2, direction: Vector2) -> void:	
+	wave_area.emit_wave_at_point(wave_area.global_position, false, direction)
 	
 func _on_remove_replica_wave(wave_area: WaveArea) -> void:
 	wave_area.stop_emitting_wave()

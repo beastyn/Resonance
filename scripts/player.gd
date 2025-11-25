@@ -49,6 +49,11 @@ func _ready() -> void:
 	ResonanceSignals.start_magnetic_resonance.connect(_on_start_magenetic_resonance)
 	ResonanceSignals.update_magnetic_resonance.connect(_on_update_magnetic_resonance)
 	ResonanceSignals.stop_magnetic_resonance.connect(_on_stop_magnetic_resonance)
+	
+	ResonanceSignals.start_pickup_resonance.connect(_on_start_pickup_resonance)
+	ResonanceSignals.update_pickup_resonance.connect(_on_update_pickup_resonance)
+	ResonanceSignals.stop_pickup_resonance.connect(_on_stop_pickup_resonance)
+	
 
 func  _process(delta: float) -> void:	
 	if _is_harmed: return
@@ -62,6 +67,10 @@ func  _process(delta: float) -> void:
 	if Input.is_action_just_pressed("activate_wave_2"):
 		mediator_controller_component.ask_to_activate_wave(WaveStorage.get_wave("wall"))
 	if Input.is_action_just_pressed("activate_wave_3"):
+		mediator_controller_component.ask_to_activate_wave(WaveStorage.get_wave("pickup"))
+	if Input.is_action_just_pressed("activate_wave_4"):
+		mediator_controller_component.ask_to_activate_wave(WaveStorage.get_wave("destroy"))
+	if Input.is_action_just_pressed("activate_wave_5"):
 		mediator_controller_component.ask_to_activate_wave(WaveStorage.get_wave("enemy"))
 	if Input.is_action_pressed("fire_wave", true):
 		mediator_controller_component.ask_to_sing(get_global_mouse_position())
@@ -83,7 +92,6 @@ func _physics_process(delta: float) -> void:
 	_detect_landing()
 	_was_on_floor = is_on_floor()
 	_prev_velocity = velocity
-
 
 func _solve_inputs(delta: float) -> void:	
 	if _is_attracted: return
@@ -162,6 +170,15 @@ func _on_stop_magnetic_resonance() -> void:
 	velocity_component.stop_attraction()
 	if !is_on_floor(): velocity_component.apply_jump_veloctiy()
 	
+func _on_start_pickup_resonance() -> void:
+	PlayerSignals.emit_signal("mediator_position_update", mediator.global_position)
+
+func _on_update_pickup_resonance() -> void:
+	var force_direction = Input.get_axis("wave_force_down", "wave_force_up")
+	PlayerSignals.emit_signal("pickup_force_changed", force_direction, mediator.global_position)
+	
+func _on_stop_pickup_resonance() -> void:
+	pass	
 func _solve_animations() -> void:
 	animation_component.update_air(is_on_floor(), velocity.y)
 	animation_component.set_movement_direction(_direction)

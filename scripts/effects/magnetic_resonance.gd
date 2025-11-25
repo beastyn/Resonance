@@ -7,7 +7,7 @@ func start_resonance(particle_mat: ShaderMaterial) -> void:
 	var _direction = -particle_mat.get_shader_parameter("direction")
 	ResonanceSignals.emit_signal("start_magnetic_resonance", strength, _direction, attraction_curve)
 
-func update_resonance(particle_mat: ShaderMaterial) -> void:
+func update_resonance(particle_mat: ShaderMaterial, delta: float) -> void:
 	var _direction =-particle_mat.get_shader_parameter("direction")
 	ResonanceSignals.emit_signal("update_magnetic_resonance", _direction)
 	

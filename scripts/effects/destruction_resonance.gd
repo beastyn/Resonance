@@ -34,7 +34,7 @@ func start_resonance(particle_mat: ShaderMaterial) -> void:
 	timer.start(resonance_time)
 	_is_running = true
 
-func update_resonance(particle_mat: ShaderMaterial) -> void:
+func update_resonance(particle_mat: ShaderMaterial, delta: float) -> void:
 	ResonanceSignals.emit_signal("update_destruction_resonance", resonance_time)	
 	
 func stop_resonance(particle_mat: ShaderMaterial) -> void:

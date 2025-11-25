@@ -75,6 +75,7 @@ func emit_wave_at_point(pos: Vector2, needActivatedData:bool = false, direction:
 	var activated_wave = get_activated_wave_data()
 	var wave_data = activated_wave if needActivatedData && activated_wave else get_wave_data()
 	active_wave_effect =  WavePool.obtain(self as Node2D) as Node2D
+	if !needActivatedData: default_wave_resource.direction = direction
 	active_wave_effect.init_from_pool(self as Node2D, wave_data, pos, direction, needCollision)
 	if audio_player: audio_player.volume_db = listen_volume	
 
@@ -90,9 +91,9 @@ func _on_start_resonance(area: Area2D, particle_mat: ShaderMaterial) -> void:
 	if (area == self && resonance_effect):
 		resonance_effect.start_resonance(particle_mat)
 		
-func _on_update_resonance(area: Area2D, particle_mat: ShaderMaterial) -> void:
+func _on_update_resonance(area: Area2D, particle_mat: ShaderMaterial, delta:float) -> void:
 	if (area == self && resonance_effect):
-		resonance_effect.update_resonance(particle_mat)
+		resonance_effect.update_resonance(particle_mat, delta)
 
 func _on_stop_resonance(area: Area2D, particle_mat: ShaderMaterial) -> void:
 	if (area == self && resonance_effect):

@@ -1,0 +1,46 @@
+[gd_scene load_steps=10 format=3 uid="uid://crm5trnpie2jx"]
+
+[ext_resource type="Texture2D" uid="uid://ecdtmjaoia6c" path="res://assets/tileset_sheet.png" id="1_vp5kq"]
+[ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="2_561ps"]
+[ext_resource type="Resource" uid="uid://dvo003jj34rxm" path="res://scripts/data/waves/floor_wave.tres" id="3_hx88f"]
+[ext_resource type="Script" uid="uid://c3y6mjv6ttd4c" path="res://scripts/effects/fly_resonance.gd" id="4_0wd0p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_561ps"]
+atlas = ExtResource("1_vp5kq")
+region = Rect2(1600, 88, 200, 66)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wkmig"]
+size = Vector2(200, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0qgo"]
+size = Vector2(199, 62)
+
+[sub_resource type="Curve" id="Curve_hx88f"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.99999, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_0wd0p"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 1, Vector2(1, 0.5), 0.0, 0.0, 1, 0]
+point_count = 2
+
+[node name="JumpPad" type="RigidBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_561ps")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_wkmig")
+
+[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect") instance=ExtResource("2_561ps")]
+default_wave_resource = ExtResource("3_hx88f")
+resonance_effect = NodePath("FlyEffect")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
+position = Vector2(-0.5, 2)
+shape = SubResource("RectangleShape2D_r0qgo")
+
+[node name="FlyEffect" type="Node" parent="WaveArea"]
+script = ExtResource("4_0wd0p")
+ascent_curve = SubResource("Curve_hx88f")
+descent_curve = SubResource("Curve_0wd0p")
