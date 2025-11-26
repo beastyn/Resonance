@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bijge06ct1bn1"]
+[gd_scene load_steps=9 format=3 uid="uid://bijge06ct1bn1"]
 
 [ext_resource type="Script" uid="uid://yrxowwcyvlq" path="res://scripts/wave_effect_particles.gd" id="1_e411w"]
-[ext_resource type="Texture2D" uid="uid://bedqox3ohns63" path="res://assets/old/pin.png" id="2_b11ko"]
+[ext_resource type="Texture2D" uid="uid://dsclxdr0e63r1" path="res://assets/wave_particle.png" id="2_e411w"]
 [ext_resource type="Shader" uid="uid://bl8flq0jegiwc" path="res://assets/sinparticle.gdshader" id="3_xghno"]
 
 [sub_resource type="Gradient" id="Gradient_e411w"]
@@ -15,6 +15,9 @@ height = 200
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b11ko"]
+light_mode = 1
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]
 shader = ExtResource("3_xghno")
 shader_parameter/scale_factor = 0.0
@@ -22,7 +25,8 @@ shader_parameter/direction = Vector2(0, -1)
 shader_parameter/travel_distance = 50.0
 shader_parameter/amplitude = 10.0
 shader_parameter/frequency = 1.0
-shader_parameter/speed = 50.0
+shader_parameter/color = Vector4(0, 0, 0, 0)
+shader_parameter/bloom = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e411w"]
 
@@ -42,11 +46,13 @@ texture = SubResource("GradientTexture2D_b11ko")
 
 [node name="GPUWaveParticles" type="GPUParticles2D" parent="."]
 process_mode = 3
+modulate = Color(1.2906541, 1.2906541, 1.2906541, 1)
+material = SubResource("CanvasItemMaterial_b11ko")
 position = Vector2(0, 1)
 emitting = false
-amount = 5
-texture = ExtResource("2_b11ko")
-lifetime = 0.2
+texture = ExtResource("2_e411w")
+lifetime = 0.5
+fract_delta = false
 local_coords = true
 trail_lifetime = 0.61
 process_material = SubResource("ShaderMaterial_kvpfn")

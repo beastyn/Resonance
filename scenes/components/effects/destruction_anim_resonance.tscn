@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://djx105ra2auwd"]
+
+[ext_resource type="Script" uid="uid://d388ktb00y78x" path="res://scripts/effects/destruction_anim_resonance.gd" id="1_vrjww"]
+
+[node name="DestructionAnimResonance" type="Node" node_paths=PackedStringArray("timer")]
+script = ExtResource("1_vrjww")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

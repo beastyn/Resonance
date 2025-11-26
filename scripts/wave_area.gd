@@ -80,9 +80,10 @@ func emit_wave_at_point(pos: Vector2, needActivatedData:bool = false, direction:
 	if audio_player: audio_player.volume_db = listen_volume	
 
 func update_active_wave(pos: Vector2, direction: Vector2) -> void:
-	active_wave_effect.update_visuals(pos, direction)
+	if active_wave_effect : active_wave_effect.update_visuals(pos, direction)
 
 func stop_emitting_wave() -> void:
+	if !active_wave_effect: return
 	active_wave_effect.hide_wave()
 	active_wave_effect = null
 	if audio_player: audio_player.volume_db = _default_volume

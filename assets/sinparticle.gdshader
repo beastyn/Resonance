@@ -5,7 +5,8 @@ uniform vec2 direction;
 uniform float travel_distance;
 uniform float amplitude;
 uniform float frequency;
-uniform float speed;
+uniform vec4 color;
+uniform float bloom;
 
 void start(){
 	CUSTOM[0] = 0.0;
@@ -52,28 +53,5 @@ void process() {
 	//TRANSFORM[3].xy = normal * perp_vel + direction * forward_speed;
     // final velocity
     VELOCITY.xy = direction * forward_speed + normal * perp_vel;
-	//TRANSFORM[3].xy -= EMISSION_TRANSFORM[3].xy*CUSTOM[0];
-   
-    // --------- Debug visuals ----------
-    // progress 0..1 across lifetime
-    float prog = clamp(CUSTOM[0] / LIFETIME, 0.0, 1.0);
-    // normalized sine 0..1
-    float s_norm = 0.5 + 0.5 * sin(sin_arg);
-    // color: R = prog, G = s_norm, B = 1-prog  (so each cycle shows as G pulses)
-    COLOR = vec4(prog, s_norm, 1.0 - prog, 1.0);
-
-    // size pulses strongly at peaks so you can count them
-    // when sin crosses 1 (peak), size increases
-    float peakness = smoothstep(0.95, 1.0, sin(sin_arg)); // near 1 at peaks
-    // base size 4..12 px (adjust with SIZE in particle UI if needed)		
-//
-//
-//
-//
-    //// compute perpendicular velocity term (derivative of A*sin(k*s))
-    //// dy/dt = A * k * cos(k*s) * ds/dt  (ds/dt == speed)
-    //float perp_vel_scalar = amplitude * freq * cos(freq * s) * speed;
-//
-    //// set velocity: base along dir + oscillating component along normal
-    //VELOCITY.xy = direction * speed + normal * perp_vel_scalar;
+    COLOR = vec4(color.r, color.g, color.b, color.a) * bloom;
 	}

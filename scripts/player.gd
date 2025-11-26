@@ -20,7 +20,7 @@ var _can_move: bool = true
 var _was_on_floor: bool = false
 var _prev_velocity: Vector2
 
-var _is_harmed = false
+var _is_disabled = false
 var _is_invulnerable = false
 
 var _should_fly = false
@@ -34,12 +34,19 @@ var _attraction_strength: float
 var _attraction_curve: Curve
 var _attraction_direction: Vector2
 
+func need_disable_inputs(is_disabled: bool) -> void:
+	_is_disabled = is_disabled
 
 func _ready() -> void:
+			
+	need_disable_inputs(true)
+	animation_component.play_intro()
+	animation_component.intro_finished.connect(_on_intro_finished)
+	
 	PlayerSignals.get_instant_harm.connect(_on_get_instant_harm)
 	PlayerSignals.want_stop_moving.connect(_on_want_to_stop_moving)
-	PlayerSignals.need_respawn.connect(_on_need_respawn)
-	
+	PlayerSignals.need_respawn.connect(_on_need_respawn)	
+
 	if mediator: mediator.listen_action_component.listening_wave.connect(_on_listening_wave)
 	if mediator: mediator.listen_action_component.stop_listening_wave.connect(_on_stop_listening_wave)		
 	ResonanceSignals.start_fly_resonance.connect(_on_start_fly_resonance)
@@ -53,10 +60,9 @@ func _ready() -> void:
 	ResonanceSignals.start_pickup_resonance.connect(_on_start_pickup_resonance)
 	ResonanceSignals.update_pickup_resonance.connect(_on_update_pickup_resonance)
 	ResonanceSignals.stop_pickup_resonance.connect(_on_stop_pickup_resonance)
-	
 
 func  _process(delta: float) -> void:	
-	if _is_harmed: return
+	if _is_disabled: return
 	
 	#region MEDIATOR CONTROLLER
 	if Input.is_action_just_pressed("listen", true):
@@ -80,7 +86,7 @@ func  _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:	
 	#region MOVEMENT
-	if _can_move && !_is_harmed: 
+	if _can_move && !_is_disabled: 
 		_solve_inputs(delta)
 		_solve_fly_resonance(delta)	
 		_solve_magnetic_resonance(delta)		
@@ -115,14 +121,14 @@ func _on_get_instant_harm() -> void:
 	damaged_component.start_damaged_sequence()
 
 func _on_want_to_stop_moving() -> void:
-	_is_harmed = true
+	_is_disabled = true
 	velocity_component.stop(self)
 	mediator_controller_component.ask_to_stop_sing()
 	mediator_controller_component.ask_to_stop_listen()
 
 func _on_need_respawn() -> void:
 	respawn_component._die_and_respawn(self, global_position)
-	_is_harmed = false
+	_is_disabled = false
 
 func _on_listening_wave(wave_area: WaveArea, wave_data: WaveData, position: Vector2) -> void:
 	velocity_component.stop(self)
@@ -182,6 +188,9 @@ func _on_stop_pickup_resonance() -> void:
 func _solve_animations() -> void:
 	animation_component.update_air(is_on_floor(), velocity.y)
 	animation_component.set_movement_direction(_direction)
+
+func _on_intro_finished() -> void:
+	need_disable_inputs(false)
 
 func _detect_landing():
 	var now_on_floor = is_on_floor()

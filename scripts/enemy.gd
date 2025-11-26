@@ -3,7 +3,9 @@ class_name Enemy
 
 @export var tentacles: Array[Tentacle]
 @export var target: Node2D
+@export var timer:Timer
 
+@export var attack_lag: float = 1.0
 @export var attack_time: = 2.0
 @export var retract_time = 1.0
 
@@ -12,9 +14,6 @@ var _retracting:Array[bool] = []
 var _target_pos: = Vector2.INF
 
 var _check_tentacle:Tentacle
-
-# spawn settings
-@export var appear_animation_time := 0.12
 
 func _ready():
 	visible = false
@@ -34,21 +33,17 @@ func _process(delta: float) -> void:
 		if _retracting[i]:
 			tentacles[i].retract(delta)
 
+func set_target(new_target: Node2D) -> void:
+	target = new_target
+
+
 func appear_and_attack(spawn_pos: Node2D) -> void:
-	# place & show
+	if !target: return
 	global_position = spawn_pos.global_position
 	rotation = spawn_pos.rotation
 	visible = true
-	for i in range(tentacles.size()):
-		tentacles[i].init_tentacle()
-		_fireing[i] = true
-		
-	set_process(true)
-		
-	if has_node("Tween"):
-		# if you have a Tween node you can animate; otherwise skip
-		pass
-		
+	timer.start(attack_lag)
+
 func _on_attack_finished(tentacle: Tentacle) -> void:
 	for i in range(tentacles.size()):
 		if tentacles[i] ==  tentacle:
@@ -63,3 +58,12 @@ func _on_retract_finished(tentacle: Tentacle) -> void:
 			_retracting[i] = false		
 	_target_pos = Vector2.INF
 	set_process(false)
+
+
+func _on_timer_timeout() -> void:
+	for i in range(tentacles.size()):
+		tentacles[i].init_tentacle()
+		_fireing[i] = true
+		
+	set_process(true)
+	timer.stop()

@@ -5,7 +5,6 @@ signal attack_finished(tentacle:Tentacle)
 signal retract_finished(tentacle:Tentacle)
 
 @export var tentacle: Line2D
-@export var target: Node2D
 @export var segments_number: int = 5
 @export var limit_max_length: float = 200.0
 @export var max_length:float = 200.0

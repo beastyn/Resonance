@@ -1,6 +1,8 @@
 extends Node
 class_name AnimationComponent
 
+signal intro_finished()
+
 @export var animation_tree: AnimationTree
 @export var sprite: AnimatedSprite2D
 
@@ -36,7 +38,10 @@ func update_air(on_ground: bool, up_direction : float) -> void:
 			animation_state.travel("fall")
 			current_State = State.Fall
 
+func play_intro() -> void:
+	animation_state.travel("wakeup")
 
-
+func notify_intro_finished() -> void:
+	emit_signal("intro_finished")
 
 	

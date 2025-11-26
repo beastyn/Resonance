@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://82yawaxjl0c7"]
+[gd_scene load_steps=42 format=3 uid="uid://82yawaxjl0c7"]
 
 [ext_resource type="Script" uid="uid://d31epwq3c4afl" path="res://scripts/player.gd" id="1_qlg0r"]
 [ext_resource type="SpriteFrames" uid="uid://dj2yelar2cqlf" path="res://assets/old/player.tres" id="2_g2els"]
@@ -379,6 +379,60 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_jej6c"]
+resource_name = "wakeup"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:sprite_frames")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_g2els")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"wakeup"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.3, 5.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimationComponent")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"notify_intro_finished"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_smehm"]
 _data = {
 &"RESET": SubResource("Animation_qlg0r"),
@@ -388,6 +442,7 @@ _data = {
 &"jump_down_right": SubResource("Animation_d2wvv"),
 &"jump_up_left": SubResource("Animation_y4r1p"),
 &"jump_up_right": SubResource("Animation_ur7pv"),
+&"wakeup": SubResource("Animation_jej6c"),
 &"walk_left": SubResource("Animation_fjrip"),
 &"walk_right": SubResource("Animation_tuyoq")
 }
@@ -415,6 +470,9 @@ states/jump_up_right/node = SubResource("AnimationNodeAnimation_ur7pv")
 states/jump_up_right/position = Vector2(437, 105)
 transitions = ["Start", "jump_up_right", SubResource("AnimationNodeStateMachineTransition_y4r1p")]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d2wvv"]
+animation = &"wakeup"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qlg0r"]
 animation = &"walk_left"
 
@@ -441,11 +499,6 @@ max_space = 2.0
 snap = 0.02
 blend_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qlg0r"]
-advance_mode = 2
-advance_expression = "
-"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jej6c"]
 break_loop_at_end = true
 reset = false
@@ -457,16 +510,26 @@ switch_mode = 1
 reset = false
 switch_mode = 1
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_smehm"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ur7pv"]
+reset = false
+switch_mode = 2
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_d2wvv"]
-states/Start/position = Vector2(253, 159)
+states/Start/position = Vector2(257, 159)
 states/fall/node = SubResource("AnimationNodeStateMachine_tuyoq")
 states/fall/position = Vector2(748.25, 59)
 states/to_air/node = SubResource("AnimationNodeStateMachine_3v2ag")
 states/to_air/position = Vector2(588.25, 59)
+states/wakeup/node = SubResource("AnimationNodeAnimation_d2wvv")
+states/wakeup/position = Vector2(342.04782, 59)
 states/walk/node = SubResource("AnimationNodeBlendSpace1D_smehm")
 states/walk/position = Vector2(588.25, 159)
-transitions = ["Start", "walk", SubResource("AnimationNodeStateMachineTransition_qlg0r"), "walk", "to_air", SubResource("AnimationNodeStateMachineTransition_jej6c"), "to_air", "fall", SubResource("AnimationNodeStateMachineTransition_tuyoq"), "fall", "walk", SubResource("AnimationNodeStateMachineTransition_fjrip")]
-graph_offset = Vector2(222.04782, 4)
+transitions = ["walk", "to_air", SubResource("AnimationNodeStateMachineTransition_jej6c"), "to_air", "fall", SubResource("AnimationNodeStateMachineTransition_tuyoq"), "fall", "walk", SubResource("AnimationNodeStateMachineTransition_fjrip"), "Start", "wakeup", SubResource("AnimationNodeStateMachineTransition_smehm"), "wakeup", "walk", SubResource("AnimationNodeStateMachineTransition_ur7pv")]
+graph_offset = Vector2(111.04782, -7)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tuyoq"]
 radius = 58.0
@@ -504,13 +567,12 @@ sprite_to_blink = NodePath("../AnimatedSprite2D")
 [node name="RespawnComponent" type="Node" parent="."]
 script = ExtResource("5_tuyoq")
 
-[node name="AudioComponent" type="Node" parent="." node_paths=PackedStringArray("audio_player")]
+[node name="AudioComponent" type="Node2D" parent="." node_paths=PackedStringArray("audio_player")]
 script = ExtResource("8_smehm")
 audio_player = NodePath("StepsPlayer")
 
 [node name="StepsPlayer" type="AudioStreamPlayer2D" parent="AudioComponent"]
 stream = SubResource("AudioStreamMP3_fjrip")
-volume_db = -13.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

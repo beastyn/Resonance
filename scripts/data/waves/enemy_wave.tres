@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WaveData" load_steps=2 format=3 uid="uid://buxceg7w6xwlh"]
+
+[ext_resource type="Script" uid="uid://cb0dd6ie4u175" path="res://scripts/data/waves/wave_data.gd" id="1_jnlfv"]
+
+[resource]
+script = ExtResource("1_jnlfv")
+name = "enemy"
+scale_factor = 0.8
+amplitude = 10.0
+frequency = 7.0
+color = Color(0.62503797, 0.3656206, 0.3291709, 1)
+metadata/_custom_type_script = "uid://cb0dd6ie4u175"

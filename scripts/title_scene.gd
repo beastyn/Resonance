@@ -1,7 +1,7 @@
 extends Control
 
 func _on_start_game_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	TransitionManager.transite_to("res://scenes/game.tscn", 1.0)	
 
 func _on_quit_game_pressed() -> void:
 	get_tree().quit()

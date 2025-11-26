@@ -6,7 +6,8 @@
 script = ExtResource("1_ed8yf")
 name = "destroy"
 direction = Vector2(-1, 0)
-scale_factor = 0.4
+scale_factor = 0.8
 amplitude = 5.0
 frequency = 5.0
+color = Color(0.67785406, 0.43530855, 0.5897656, 1)
 metadata/_custom_type_script = "uid://cb0dd6ie4u175"

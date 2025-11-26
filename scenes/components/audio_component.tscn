@@ -4,7 +4,7 @@
 
 [sub_resource type="AudioStreamMP3" id="AudioStreamMP3_fjrip"]
 
-[node name="AudioComponent" type="Node" node_paths=PackedStringArray("audio_player")]
+[node name="AudioComponent" type="Node2D" node_paths=PackedStringArray("audio_player")]
 script = ExtResource("1_4t6hf")
 audio_player = NodePath("StepsPlayer")
 

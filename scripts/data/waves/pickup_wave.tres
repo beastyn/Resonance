@@ -6,7 +6,8 @@
 script = ExtResource("1_7h1a1")
 name = "pickup"
 direction = Vector2(-1, 0)
-scale_factor = 0.4
+scale_factor = 0.8
 amplitude = 30.0
 frequency = 3.0
+color = Color(0.67891353, 0.37599313, 0.27626798, 1)
 metadata/_custom_type_script = "uid://cb0dd6ie4u175"

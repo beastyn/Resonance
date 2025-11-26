@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://cnuhftvdfu30l"]
+[gd_scene load_steps=55 format=4 uid="uid://cnuhftvdfu30l"]
 
 [ext_resource type="Script" uid="uid://4tbvrxq7q57m" path="res://scripts/game_manager.gd" id="1_rysoc"]
 [ext_resource type="PackedScene" uid="uid://82yawaxjl0c7" path="res://scenes/player.tscn" id="1_uwrxv"]
@@ -11,12 +11,20 @@
 [ext_resource type="PackedScene" uid="uid://bbr7rvs1wsw1w" path="res://scenes/mediator.tscn" id="5_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://cx7whga4oygyq" path="res://scenes/components/effects/magnetic_resonance.tscn" id="5_vtaks"]
 [ext_resource type="Texture2D" uid="uid://ecdtmjaoia6c" path="res://assets/tileset_sheet.png" id="6_vtaks"]
+[ext_resource type="Texture2D" uid="uid://bmlarvj7njmf1" path="res://assets/animationsSheet.png" id="7_ssvqc"]
 [ext_resource type="Script" uid="uid://cb0dd6ie4u175" path="res://scripts/data/waves/wave_data.gd" id="8_dinhu"]
 [ext_resource type="PackedScene" uid="uid://b7orksnx4yfkk" path="res://scenes/ui/WavesUI.tscn" id="11_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://spuqigshbkrh" path="res://scenes/rigid_objects/infected_door.tscn" id="12_trtic"]
 [ext_resource type="PackedScene" uid="uid://crm5trnpie2jx" path="res://scenes/rigid_objects/jump_pad.tscn" id="13_264po"]
 [ext_resource type="PackedScene" uid="uid://0gkxpox83pku" path="res://scenes/enemy.tscn" id="15_ir15t"]
 [ext_resource type="PackedScene" uid="uid://b1ncoxkgvw65s" path="res://scenes/rigid_objects/pickup.tscn" id="16_ssvqc"]
+
+[sub_resource type="Environment" id="Environment_rysoc"]
+glow_intensity = 7.83
+glow_strength = 1.86
+glow_bloom = 0.71
+glow_hdr_threshold = 0.14
+glow_hdr_luminance_cap = 72.15
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dinhu"]
 atlas = ExtResource("6_vtaks")
@@ -100,14 +108,14 @@ sources/2 = SubResource("TileSetAtlasSource_vtaks")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvuet"]
 shader = ExtResource("3_trtic")
 shader_parameter/tile_size = 200.0
-shader_parameter/tint_color = Color(0, 0.86882913, 0.25303942, 0.56078434)
-shader_parameter/mix_tint = 1.0
+shader_parameter/tint_color = Color(0.3647059, 0.53333336, 0.32941177, 1)
+shader_parameter/mix_tint = 0.7330000348175
 shader_parameter/side_top = 1.0
 shader_parameter/side_right = 0.0
 shader_parameter/side_bottom = 0.0
 shader_parameter/side_left = 0.0
-shader_parameter/thickness_px = 10.000000475
-shader_parameter/soften_px = 1.52400007239
+shader_parameter/thickness_px = 6.50000030875
+shader_parameter/soften_px = 0.10000000475
 shader_parameter/pulse_speed = 5.00000023098023
 shader_parameter/pulse_freq = 40.0
 shader_parameter/pulse_amp = 0.0050000002375
@@ -154,16 +162,52 @@ shader_parameter/distortion_strength = 0.30000001425
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_trtic"]
 texture = ExtResource("6_vtaks")
 texture_region_size = Vector2i(200, 200)
-2:0/0 = 0
-2:0/0/material = SubResource("ShaderMaterial_kvuet")
 3:0/0 = 0
 3:0/0/material = SubResource("ShaderMaterial_trtic")
 4:0/0 = 0
 4:0/0/material = SubResource("ShaderMaterial_ir15t")
+2:0/0 = 0
+2:0/0/material = SubResource("ShaderMaterial_kvuet")
 
 [sub_resource type="TileSet" id="TileSet_ir15t"]
 tile_size = Vector2i(200, 200)
 sources/0 = SubResource("TileSetAtlasSource_trtic")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_264po"]
+atlas = ExtResource("7_ssvqc")
+region = Rect2(0, 250, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kice"]
+atlas = ExtResource("7_ssvqc")
+region = Rect2(250, 250, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5newe"]
+atlas = ExtResource("7_ssvqc")
+region = Rect2(500, 250, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37s47"]
+atlas = ExtResource("7_ssvqc")
+region = Rect2(750, 250, 250, 250)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bt5mj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_264po")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kice")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5newe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37s47")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="Gradient" id="Gradient_dinhu"]
 offsets = PackedFloat32Array(0.21465969, 0.74345547)
@@ -201,7 +245,7 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.66197187, 0.011235952), 0.0, 0
 point_count = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1kice"]
-size = Vector2(398.75, 58.25)
+size = Vector2(597, 58.25)
 
 [sub_resource type="Resource" id="Resource_dinhu"]
 script = ExtResource("8_dinhu")
@@ -209,7 +253,6 @@ name = "floor"
 direction = Vector2(0, -1)
 scale_factor = 0.4
 amplitude = 20.0
-amount = 1
 metadata/_custom_type_script = "uid://cb0dd6ie4u175"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trtic"]
@@ -228,6 +271,7 @@ direction = Vector2(1, 0)
 scale_factor = 0.4
 amplitude = 50.0
 frequency = 2.0
+color = Color(0.39215687, 0.39215687, 0.5568628, 1)
 metadata/_custom_type_script = "uid://cb0dd6ie4u175"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0tnpc"]
@@ -244,6 +288,7 @@ direction = Vector2(-1, 0)
 scale_factor = 0.4
 amplitude = 50.0
 frequency = 2.0
+color = Color(0.39215687, 0.39215687, 0.5568628, 1)
 metadata/_custom_type_script = "uid://cb0dd6ie4u175"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ca42v"]
@@ -256,12 +301,16 @@ direction = Vector2(1, 0)
 scale_factor = 0.4
 amplitude = 50.0
 frequency = 2.0
+color = Color(0.39215687, 0.39215687, 0.5568628, 1)
 metadata/_custom_type_script = "uid://cb0dd6ie4u175"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5newe"]
 size = Vector2(88, 653)
 
 [node name="Game" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rysoc")
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("exception_nodes", "mediator", "canvas_modulate")]
 unique_name_in_owner = true
@@ -306,14 +355,17 @@ physics_quadrant_size = 200
 show_behind_parent = true
 top_level = true
 z_index = 1
-tile_map_data = PackedByteArray("AAD8/wAAAAACAAAAAAD9/wAAAAACAAAAAAAAAPv/AAACAAAAAAABAPv/AAACAAAAAAACAPv/AAACAAAAAAD7/wAAAAACAAAAAAA=")
+tile_map_data = PackedByteArray("AAD8/wAAAAACAAAAAAD9/wAAAAACAAAAAAD7/wAAAAACAAAAAAD+/wAAAAACAAAAAAAKAAAAAAACAAAAAAALAAAAAAACAAAAAAAMAAAAAAACAAAAAAAWAAAAAAACAAAAAAAXAAAAAAACAAAAAAAZAAAAAAACAAAAAAAbAAAAAAACAAAAAAA=")
 tile_set = SubResource("TileSet_ir15t")
 
-[node name="EnemyManager" type="Node" parent="." node_paths=PackedStringArray("enemy", "spawn_pos", "timer")]
+[node name="EnemyManager" type="Node" parent="." node_paths=PackedStringArray("enemy", "main_target", "spawn_pos", "timer", "cutscene_spawn_pos", "cutscene_target")]
 script = ExtResource("5_ca42v")
 enemy = NodePath("Enemy")
-spawn_pos = [NodePath("SpawnPos2"), NodePath("SpawnPos")]
+main_target = NodePath("../Player")
+spawn_pos = [NodePath("SpawnPos2"), NodePath("SpawnPos"), NodePath("SpawnPos3")]
 timer = NodePath("Timer")
+cutscene_spawn_pos = NodePath("SpawnPos3")
+cutscene_target = NodePath("CutsceneTarget")
 
 [node name="Timer" type="Timer" parent="EnemyManager"]
 
@@ -322,22 +374,31 @@ position = Vector2(6096, -4273)
 target = NodePath("../../Player")
 
 [node name="SpawnPos" type="Node2D" parent="EnemyManager"]
-position = Vector2(4698, -4037)
+position = Vector2(4932, -3816)
 rotation = -1.5707964
 
 [node name="SpawnPos2" type="Node2D" parent="EnemyManager"]
-position = Vector2(5479, -3333)
+position = Vector2(5479, -3341)
 rotation = 3.1415927
+
+[node name="SpawnPos3" type="Node2D" parent="EnemyManager"]
+position = Vector2(6265, -3692)
+rotation = 1.5707964
+
+[node name="CutsceneTarget" type="AnimatedSprite2D" parent="EnemyManager"]
+position = Vector2(5668, -3524)
+sprite_frames = SubResource("SpriteFrames_bt5mj")
+autoplay = "default"
 
 [node name="Player" parent="." node_paths=PackedStringArray("mediator_center", "mediator") instance=ExtResource("1_uwrxv")]
 unique_name_in_owner = true
-position = Vector2(4020, -3571)
+position = Vector2(-1451, -140)
 slide_on_ceiling = false
 mediator_center = NodePath("MediatorCenter")
 mediator = NodePath("../Mediator")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(0, -59)
+position = Vector2(6893, -3603)
 limit_bottom = 270
 position_smoothing_enabled = true
 
@@ -447,6 +508,7 @@ volume_delta = 0.2
 pitch_delta = 0.05
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaveAreas/Floor3"]
+position = Vector2(16.5, 0)
 shape = SubResource("RectangleShape2D_1kice")
 
 [node name="FlyEffect2" parent="WaveAreas/Floor3" instance=ExtResource("3_gee14")]
@@ -621,5 +683,8 @@ position = Vector2(5886, -139)
 
 [node name="Node2D5" type="Node2D" parent="RespawnPoints" groups=["respawn_point"]]
 position = Vector2(-238, -1502)
+
+[node name="Node2D6" type="Node2D" parent="RespawnPoints" groups=["respawn_point"]]
+position = Vector2(4922, -3561)
 
 [connection signal="timeout" from="EnemyManager/Timer" to="EnemyManager" method="_on_timer_timeout"]

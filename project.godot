@@ -15,6 +15,10 @@ run/main_scene="uid://cmu6eg1knl1gl"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/size/viewport_height=1080
+
 [autoload]
 
 WavePool="*res://scripts/globals/wave_pool.gd"
@@ -22,6 +26,7 @@ PlayerSignals="*res://scripts/globals/player_signals.gd"
 WaveStorage="*res://scripts/globals/wave_storage.gd"
 ResonanceSignals="*res://scripts/globals/resonance_signals.gd"
 AudioManager="*res://scenes/audio_manager.tscn"
+TransitionManager="*res://scripts/globals/transition_manager.gd"
 
 [display]
 
@@ -132,3 +137,5 @@ wave_force_down={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+viewport/hdr_2d=true
+anti_aliasing/quality/msaa_2d=2

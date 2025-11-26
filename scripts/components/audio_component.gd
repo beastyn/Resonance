@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 class_name AudioComponent
 
 @export var audio_player: AudioStreamPlayer2D

@@ -45,9 +45,10 @@ func setup_from_wave(wave: WaveData, origin: Vector2, direction: Vector2 = Vecto
 	_mat.set_shader_parameter("amplitude", wave.amplitude)
 	_mat.set_shader_parameter("frequency", wave.frequency)
 	_mat.set_shader_parameter("travel_distance", wave.travel_distane)
-	_mat.set_shader_parameter("speed", wave.speed)
 	_mat.set_shader_parameter("scale_factor", wave.scale_factor)
+	_mat.set_shader_parameter("color", wave.color)
 	_wave_name = wave.name
+	particles.amount = (wave.travel_distane*3 / 20.0) * wave.scale_factor
 	global_position = origin	
 	particles.emitting = true
 	start_lightup()

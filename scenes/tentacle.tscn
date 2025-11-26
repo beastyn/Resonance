@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://bcn67q5m76yr4"]
+[gd_scene load_steps=4 format=3 uid="uid://bcn67q5m76yr4"]
 
 [ext_resource type="Script" uid="uid://ci150h6ab1aqq" path="res://scripts/tentacle.gd" id="1_spd53"]
+
+[sub_resource type="Curve" id="Curve_spd53"]
+_data = [Vector2(0, 0.2931034), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_spd53"]
+offsets = PackedFloat32Array(0.66292137, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.3287923, 0.062574774, 0.0936782, 1)
 
 [node name="Tentacle" type="Node2D" node_paths=PackedStringArray("tentacle", "areas_parent")]
 script = ExtResource("1_spd53")
@@ -12,3 +20,5 @@ areas_parent = NodePath("Areas")
 
 [node name="Tentacle2" type="Line2D" parent="."]
 scale = Vector2(2.6705775, 3.5310438)
+width_curve = SubResource("Curve_spd53")
+gradient = SubResource("Gradient_spd53")

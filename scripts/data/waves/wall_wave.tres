@@ -6,7 +6,8 @@
 script = ExtResource("1_uskp3")
 name = "wall"
 direction = Vector2(1, 0)
-scale_factor = 0.4
-amplitude = 50.0
+scale_factor = 0.8
+amplitude = 40.0
 frequency = 2.0
+color = Color(0.39361635, 0.39308792, 0.5572975, 1)
 metadata/_custom_type_script = "uid://cb0dd6ie4u175"

@@ -56,7 +56,7 @@ amplitude_change_step = 5.0
 script = ExtResource("5_mkxtl")
 area_to_sing_from = NodePath("../WaveArea")
 
-[node name="AudioComponent" type="Node" parent="." node_paths=PackedStringArray("audio_player")]
+[node name="AudioComponent" type="Node2D" parent="." node_paths=PackedStringArray("audio_player")]
 script = ExtResource("6_lnx73")
 audio_player = NodePath("Voice")
 
@@ -75,6 +75,10 @@ animation = &"idle"
 position = Vector2(9, 22)
 collision_layer = 8
 default_wave_resource = ExtResource("7_mkxtl")
+default_travel_distance = 200.0
+listen_volume = 0.0
+volume_delta = 0.2
+pitch_delta = 0.05
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
 position = Vector2(2, 2)
