@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmu6eg1knl1gl"]
+[gd_scene load_steps=10 format=3 uid="uid://cmu6eg1knl1gl"]
 
 [ext_resource type="Script" uid="uid://de2gr0xl5oyj7" path="res://scripts/title_scene.gd" id="1_6jsh8"]
 [ext_resource type="AudioStream" uid="uid://dwa7ao5gaflmu" path="res://assets/audio/weightless-relaxing-meditative-music-426994.mp3" id="2_faptf"]
@@ -15,6 +15,15 @@ gradient = SubResource("Gradient_l8sac")
 fill = 1
 fill_from = Vector2(0.89316237, 0.15811966)
 fill_to = Vector2(0.2777778, 0.45299146)
+
+[sub_resource type="Gradient" id="Gradient_bq8jb"]
+offsets = PackedFloat32Array(0.8523985, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.47058824, 0.74509805, 0.7764706, 0.23137255)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l5n7b"]
+gradient = SubResource("Gradient_bq8jb")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
 
 [node name="TitleScene" type="Control" node_paths=PackedStringArray("bg_player", "button_player")]
 layout_mode = 3
@@ -41,10 +50,10 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 86.0
-offset_top = -404.0
-offset_right = 386.0
-offset_bottom = -304.0
+offset_left = 50.0
+offset_top = -349.0
+offset_right = 350.0
+offset_bottom = -249.0
 grow_vertical = 0
 texture = SubResource("GradientTexture2D_bq8jb")
 
@@ -55,29 +64,31 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0.66656804, 0.66656905, 0.6665682, 1)
 theme_override_fonts/font = ExtResource("3_bq8jb")
 theme_override_font_sizes/font_size = 32
 text = "Start Resonate"
 
-[node name="Start2" type="TextureRect" parent="."]
+[node name="Quit" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 86.0
-offset_top = -289.0
-offset_right = 386.0
-offset_bottom = -189.0
+offset_left = 50.0
+offset_top = -199.0
+offset_right = 350.0
+offset_bottom = -99.0
 grow_vertical = 0
 texture = SubResource("GradientTexture2D_bq8jb")
 
-[node name="QuitGame" type="Button" parent="Start2"]
+[node name="QuitGame" type="Button" parent="Quit"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
 theme_override_fonts/font = ExtResource("3_bq8jb")
 theme_override_font_sizes/font_size = 32
 text = "Quit"
@@ -92,5 +103,65 @@ autoplay = true
 [node name="PlayerButtons" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_bq8jb")
 
+[node name="CreditsWindpw" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -910.0
+offset_top = -494.0
+offset_right = -410.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CreditsWindpw"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 15.0
+offset_right = 7.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_l5n7b")
+
+[node name="MarginContainer" type="MarginContainer" parent="CreditsWindpw/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="CreditsText" type="RichTextLabel" parent="CreditsWindpw/TextureRect/MarginContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
+theme_override_fonts/normal_font = ExtResource("3_bq8jb")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[color=#78bec63b]Developed by[/color]
+BeastyN
+
+[color=#78bec63b]Art by[/color]
+BeastyN
+
+[color=#78bec63b]Music by[/color]
+Paul Winter from Pixabay
+
+[color=#78bec63b]Sound Effects[/color]
+Pixabay
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="Start/StartGame" to="." method="_on_start_game_pressed"]
-[connection signal="pressed" from="Start2/QuitGame" to="." method="_on_quit_game_pressed"]
+[connection signal="pressed" from="Quit/QuitGame" to="." method="_on_quit_game_pressed"]

@@ -138,6 +138,7 @@ NodePath("Panel/MarginContainer/phrase4"): 5.0,
 NodePath("Panel/MarginContainer/phrase5"): 5.0
 }
 text_delay_appear = 1.0
+next_scene_ref = "res://scenes/title_scene.tscn"
 player = NodePath("AudioStreamPlayer2D")
 
 [node name="Timer" type="Timer" parent="."]

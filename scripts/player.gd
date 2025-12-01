@@ -67,6 +67,9 @@ func _ready() -> void:
 	ResonanceSignals.stop_pickup_resonance.connect(_on_stop_pickup_resonance)
 
 func  _process(delta: float) -> void:	
+	if Input.is_action_just_pressed("quit", true):
+		get_tree().quit()
+	
 	if _is_disabled: return
 	
 	#region MEDIATOR CONTROLLER

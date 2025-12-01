@@ -2,7 +2,7 @@ extends Node
 
 signal transition_finished
 
-@onready var transition_scene := preload("res://scenes/transition.tscn")
+@onready var transition_scene := preload("res://scenes/Transition.tscn")
 var instance : Node = null
 var fade_rect : ColorRect = null
 

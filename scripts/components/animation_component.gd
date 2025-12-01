@@ -18,9 +18,6 @@ func _ready() -> void:
 	animation_tree.set("parameters/state_machine/jumping", false)
 	animation_state.state_finished.connect(_on_animation_state_finished)
 
-func _process(delta: float) -> void:
-	print(animation_state.get_current_node())
-
 func set_movement_direction(direction: float) -> void:
 	var blend_position = 2.0 if direction !=0 else 1.0
 	#_last_facing = -1.0 if direction == -1.0 else 1.0 if direction == 1.0 else _last_facing

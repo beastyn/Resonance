@@ -172,6 +172,17 @@ texture = SubResource("AtlasTexture_7077x")
 expand_mode = 2
 stretch_mode = 4
 
+[node name="quit" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+theme_override_constants/paragraph_separation = 5
+theme_override_fonts/normal_font = ExtResource("5_f7tex")
+text = "Escape - quit"
+scroll_active = false
+vertical_alignment = 1
+
 [node name="Default" type="RichTextLabel" parent="VBoxContainer"]
 visible = false
 layout_mode = 2
