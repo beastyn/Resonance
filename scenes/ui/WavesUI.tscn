@@ -1,10 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7orksnx4yfkk"]
+[gd_scene load_steps=9 format=3 uid="uid://b7orksnx4yfkk"]
 
-[ext_resource type="Texture2D" uid="uid://bnetha8b2t0tx" path="res://assets/old/waveparticles.png" id="1_ky0jq"]
+[ext_resource type="Script" uid="uid://djqassuv722sh" path="res://scripts/ui/hud.gd" id="1_geut8"]
 [ext_resource type="Script" uid="uid://cw2gpj7yrlnnv" path="res://scripts/ui/learned_waves_ui.gd" id="1_slm4g"]
 [ext_resource type="Resource" uid="uid://bgs86nahntyoy" path="res://scripts/data/wave_icons.tres" id="2_182a0"]
+[ext_resource type="Texture2D" uid="uid://jldw0hpja2d6" path="res://assets/hud_sheet.png" id="3_geut8"]
+[ext_resource type="FontFile" uid="uid://otgd1ad7ahit" path="res://assets/fonts/RobotoMono-Medium.ttf" id="5_f7tex"]
 
-[node name="WavesUI" type="Control"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7tex"]
+atlas = ExtResource("3_geut8")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7077x"]
+atlas = ExtResource("3_geut8")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6w8b"]
+atlas = ExtResource("3_geut8")
+region = Rect2(0, 0, 40, 40)
+
+[node name="WavesUI" type="Control" node_paths=PackedStringArray("instructions")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,15 +27,33 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("1_geut8")
+instructions = {
+0: NodePath("VBoxContainer/Default"),
+1: NodePath("VBoxContainer/Listen"),
+2: NodePath("VBoxContainer/SingDefault"),
+3: NodePath("VBoxContainer/floor"),
+4: NodePath("VBoxContainer/wall"),
+5: NodePath("VBoxContainer/pickup"),
+6: NodePath("VBoxContainer/destroy"),
+7: NodePath("VBoxContainer/enemy")
+}
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_left = 30.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 29.0
 offset_top = 30.0
-offset_right = 158.0
-offset_bottom = 70.0
+offset_right = 289.0
+offset_bottom = 30.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 15
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" node_paths=PackedStringArray("images_dicrionary")]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" node_paths=PackedStringArray("images_dicrionary")]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_constants/separation = 15
 script = ExtResource("1_slm4g")
@@ -34,13 +66,13 @@ images_dicrionary = {
 "wall": NodePath("Wave2")
 }
 
-[node name="Wave1" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+[node name="Wave1" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_ky0jq")
+texture = SubResource("AtlasTexture_f7tex")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave1"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/Wave1"]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -52,16 +84,37 @@ offset_left = -25.0
 offset_top = -25.0
 offset_right = 25.0
 offset_bottom = 25.0
-texture = ExtResource("1_ky0jq")
+texture = SubResource("AtlasTexture_7077x")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="Wave2" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+[node name="Wave2" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_ky0jq")
+texture = SubResource("AtlasTexture_f6w8b")
 expand_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave2"]
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/HBoxContainer/Wave2"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+texture = SubResource("AtlasTexture_7077x")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Wave3" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_f6w8b")
+expand_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/HBoxContainer/Wave3"]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -73,16 +126,16 @@ offset_left = -25.0
 offset_top = -25.0
 offset_right = -25.0
 offset_bottom = 25.0
-texture = ExtResource("1_ky0jq")
+texture = SubResource("AtlasTexture_7077x")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="Wave3" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+[node name="Wave4" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_ky0jq")
+texture = SubResource("AtlasTexture_f6w8b")
 expand_mode = 2
 
-[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave3"]
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/HBoxContainer/Wave4"]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -94,16 +147,16 @@ offset_left = -25.0
 offset_top = -25.0
 offset_right = -25.0
 offset_bottom = 25.0
-texture = ExtResource("1_ky0jq")
+texture = SubResource("AtlasTexture_7077x")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="Wave4" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+[node name="Wave5" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_ky0jq")
+texture = SubResource("AtlasTexture_f6w8b")
 expand_mode = 2
 
-[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave4"]
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/HBoxContainer/Wave5"]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -115,27 +168,121 @@ offset_left = -25.0
 offset_top = -25.0
 offset_right = -25.0
 offset_bottom = 25.0
-texture = ExtResource("1_ky0jq")
+texture = SubResource("AtlasTexture_7077x")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="Wave5" type="TextureRect" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("1_ky0jq")
-expand_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="MarginContainer/HBoxContainer/Wave5"]
+[node name="Default" type="RichTextLabel" parent="VBoxContainer"]
 visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -25.0
-offset_right = -25.0
-offset_bottom = 25.0
-texture = ExtResource("1_ky0jq")
-expand_mode = 2
-stretch_mode = 4
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+theme_override_constants/paragraph_separation = 5
+theme_override_fonts/normal_font = ExtResource("5_f7tex")
+text = "A/D - walk 
+Space - jump
+Right Mouse - listen
+Left Mouse HOLD - sing
+1,2,3,4,5 - activate a wave"
+scroll_active = false
+
+[node name="Listen" type="RichTextLabel" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+theme_override_constants/paragraph_separation = 5
+theme_override_fonts/normal_font = ExtResource("5_f7tex")
+text = "Listen carefully:
+W/A - change frequency
+A/D - change amplitude
+Mouse Left - stop listen"
+scroll_active = false
+
+[node name="SingDefault" type="RichTextLabel" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+theme_override_constants/paragraph_separation = 5
+theme_override_fonts/normal_font = ExtResource("5_f7tex")
+text = "No active wave.
+Sing your own wave.
+Left Mouse STOP HOLD - stop sing
+[font_size=12]A/D - walk 
+Space - jump[/font-size]"
+scroll_active = false
+
+[node name="floor" type="RichTextLabel" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+theme_override_constants/paragraph_separation = 5
+theme_override_fonts/normal_font = ExtResource("5_f7tex")
+bbcode_enabled = true
+text = "Floor wave is active.
+[color=#5d8854]Resonance Effect - Fly.
+Preserve resonance on floor to fly.[/color]
+A/D - direction
+Left Mouse STOP HOLD - stop sing"
+scroll_active = false
+
+[node name="wall" type="RichTextLabel" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+theme_override_constants/paragraph_separation = 5
+theme_override_fonts/normal_font = ExtResource("5_f7tex")
+bbcode_enabled = true
+text = "Wall wave is active.
+[color=#64648e]Resonance Effect - Attraction.
+Preserve resonance on a wall to be attracted.[/color]
+W/S - up/down direction 
+Left Mouse STOP HOLD - stop sing"
+scroll_active = false
+
+[node name="destroy" type="RichTextLabel" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+theme_override_constants/paragraph_separation = 5
+theme_override_fonts/normal_font = ExtResource("5_f7tex")
+bbcode_enabled = true
+text = "Destruction wave active.
+[color=#ad6f96]Resonance Effect - Destruction.
+Preserve resonance on an object to destroy it.[/color] 
+Left Mouse STOP HOLD - stop sing"
+scroll_active = false
+
+[node name="pickup" type="RichTextLabel" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+theme_override_constants/paragraph_separation = 5
+theme_override_fonts/normal_font = ExtResource("5_f7tex")
+bbcode_enabled = true
+text = "Pickup wave active.
+[color=#ad6046]Resonance Effect - Pickup.
+Preserve resonance on an object to manipulate it.[/color] 
+W/S - bring an object further/closer
+Left Mouse STOP HOLD - stop sing"
+scroll_active = false
+
+[node name="enemy" type="RichTextLabel" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+theme_override_constants/paragraph_separation = 5
+theme_override_fonts/normal_font = ExtResource("5_f7tex")
+bbcode_enabled = true
+text = "Enemy wave active.
+[color=#ad6046]Resonance Effect - Destruction.
+Destruction
+Preserve resonance on an object to destroy it.[/color] 
+Left Mouse STOP HOLD - stop sing"
+scroll_active = false

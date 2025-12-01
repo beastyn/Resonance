@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://c1tkxwfqulsfx"]
+
+[ext_resource type="PackedScene" uid="uid://bpe5ywwwunqtr" path="res://scenes/explosion.tscn" id="1_eyi5f"]
+[ext_resource type="Shader" uid="uid://dt3sqcbbucu3c" path="res://assets/infected-sprite.gdshader" id="2_c5nnh"]
+[ext_resource type="Texture2D" uid="uid://ecdtmjaoia6c" path="res://assets/tileset_sheet.png" id="3_hx40c"]
+[ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="4_42fd4"]
+[ext_resource type="Resource" uid="uid://nqg1pq8mgpr6" path="res://scripts/data/waves/destroy_wave.tres" id="5_6eqjv"]
+[ext_resource type="PackedScene" uid="uid://b13atej70rga" path="res://scenes/components/effects/destruction_resonance.tscn" id="6_ncl1n"]
+[ext_resource type="Texture2D" uid="uid://dsclxdr0e63r1" path="res://assets/wave_particle.png" id="7_c5nnh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ahqe8"]
+shader = ExtResource("2_c5nnh")
+shader_parameter/tint_color = Color(0.5411765, 0.07058824, 0.08235294, 0.5137255)
+shader_parameter/mix_tint = 0.0
+shader_parameter/side_top = 0.0
+shader_parameter/side_right = 0.0
+shader_parameter/side_bottom = 0.0
+shader_parameter/side_left = 1.0
+shader_parameter/thickness_px = 0.0
+shader_parameter/soften_px = 14.8930007074175
+shader_parameter/pulse_speed = 20.00000095
+shader_parameter/pulse_freq = 40.0
+shader_parameter/pulse_amp = 0.06800000323
+shader_parameter/edge_fade = 0.6800000323
+shader_parameter/noise_seed = 5.538000263055
+shader_parameter/distortion_strength = 8.782000417145
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apeoc"]
+atlas = ExtResource("3_hx40c")
+region = Rect2(856, 1398, 345, 401)
+
+[sub_resource type="Curve" id="Curve_hx40c"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5221843, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.02228415), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="InfectedBrickSlide" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+visible = false
+polygon = PackedVector2Array(-165, 198, -167, 1, -126, -121, -94, -162, 3, -203, 169, -202, 169, 201)
+
+[node name="Explosion" parent="." instance=ExtResource("1_eyi5f")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ahqe8")
+texture = SubResource("AtlasTexture_apeoc")
+
+[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect", "resonance_feedback") instance=ExtResource("4_42fd4")]
+default_wave_resource = ExtResource("5_6eqjv")
+resonance_effect = NodePath("DestructionResonance")
+resonance_feedback = [NodePath("CollisionPolygon2D/ResonanceFeedback")]
+
+[node name="DestructionResonance" parent="WaveArea" node_paths=PackedStringArray("parent_node", "static_sprite", "destroy_particles") groups=["finish_trigger"] instance=ExtResource("6_ncl1n")]
+resonance_time = 10.0
+parent_node = NodePath("../..")
+static_sprite = NodePath("../../Sprite2D")
+change_speed = 20.0
+destroy_particles = NodePath("../../Explosion")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WaveArea"]
+polygon = PackedVector2Array(-165, 200, -166, 2, -127, -119, -95, -162, 0, -202, 170, -201, 171, 201)
+
+[node name="ResonanceFeedback" type="CPUParticles2D" parent="WaveArea/CollisionPolygon2D"]
+position = Vector2(-4, 3)
+amount = 4
+texture = ExtResource("7_c5nnh")
+lifetime = 4.0
+emission_shape = 3
+emission_rect_extents = Vector2(150, 200)
+direction = Vector2(0, -1)
+spread = 60.76
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+angular_velocity_min = 100.0
+angular_velocity_max = 200.0
+scale_amount_curve = SubResource("Curve_hx40c")
+color = Color(0.7364719, 0.7298191, 0.70016444, 1)

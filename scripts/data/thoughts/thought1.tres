@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MultilineDescription" load_steps=2 format=3 uid="uid://cks1567f07yd0"]
+
+[ext_resource type="Script" uid="uid://4m111njyrqif" path="res://scripts/data/multiline_description.gd" id="1_mtnny"]
+
+[resource]
+script = ExtResource("1_mtnny")
+description = "Huh… What a strange sound I’ve never heard before. Is it coming from the floor? I need to listen closely."
+metadata/_custom_type_script = "uid://4m111njyrqif"

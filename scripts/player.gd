@@ -1,4 +1,6 @@
 extends CharacterBody2D
+class_name Resonator
+
 @onready var animated_sprite_2d: AnimatedSprite2D = %AnimatedSprite2D
 
 @export var velocity_component: VelocityComponent
@@ -35,6 +37,8 @@ var _attraction_curve: Curve
 var _attraction_direction: Vector2
 
 func need_disable_inputs(is_disabled: bool) -> void:
+	velocity_component.stop(self)
+	animation_component.set_movement_direction(0.0)
 	_is_disabled = is_disabled
 
 func _ready() -> void:
@@ -42,6 +46,7 @@ func _ready() -> void:
 	need_disable_inputs(true)
 	animation_component.play_intro()
 	animation_component.intro_finished.connect(_on_intro_finished)
+	
 	
 	PlayerSignals.get_instant_harm.connect(_on_get_instant_harm)
 	PlayerSignals.want_stop_moving.connect(_on_want_to_stop_moving)
@@ -65,7 +70,7 @@ func  _process(delta: float) -> void:
 	if _is_disabled: return
 	
 	#region MEDIATOR CONTROLLER
-	if Input.is_action_just_pressed("listen", true):
+	if Input.is_action_just_pressed("listen", true) && !mediator.is_mediator_singing():
 		mediator_controller_component.ask_to_listen(mediator_center if mediator_center else self as Node2D)
 	if !_can_move: return
 	if Input.is_action_just_pressed("activate_wave_1"):
@@ -119,6 +124,7 @@ func _solve_inputs(delta: float) -> void:
 
 func _on_get_instant_harm() -> void:	
 	damaged_component.start_damaged_sequence()
+	animation_component.play_pain()
 
 func _on_want_to_stop_moving() -> void:
 	_is_disabled = true
@@ -167,6 +173,7 @@ func _on_start_magenetic_resonance(strength: float, direction: Vector2, attracti
 	_attraction_direction = direction
 	_attraction_curve = attraction_curve
 	_is_attracted = true
+	animation_component.play_fly()
 
 func _on_update_magnetic_resonance(direction: Vector2) -> void:
 	_attraction_direction = direction
@@ -175,6 +182,7 @@ func _on_stop_magnetic_resonance() -> void:
 	_is_attracted = false
 	velocity_component.stop_attraction()
 	if !is_on_floor(): velocity_component.apply_jump_veloctiy()
+	animation_component.stop_fly()
 	
 func _on_start_pickup_resonance() -> void:
 	PlayerSignals.emit_signal("mediator_position_update", mediator.global_position)
@@ -213,3 +221,4 @@ func _detect_landing():
 				#else:
 					#surface_sound_id = AudioManager.Sounds.STEP   # LAND_DEFAULT
 			audio_component.play_once(AudioManager.Sounds.LANDING)
+			animation_component.play_landing()

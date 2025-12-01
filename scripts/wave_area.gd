@@ -11,6 +11,8 @@ class_name WaveArea
 @export var volume_delta: float = 0.2
 @export var pitch_delta: float = 0.05
 
+@export var resonance_feedback: Array[CPUParticles2D]
+
 var _default_volume
 
 var activated_wave: WaveData = null
@@ -25,6 +27,9 @@ func  _ready() -> void:
 	audio_player.pitch_scale = 1.0 + (wave_data.frequency - 1) * pitch_delta
 	listen_volume = wave_data.amplitude*volume_delta/5.0
 	if wave_data.name!="Default": start_wave_audio()
+	
+	for feedback in resonance_feedback:
+		feedback.color = get_wave_data().color
 	
 	ResonanceSignals.start_resonance.connect(_on_start_resonance)
 	ResonanceSignals.update_resonance.connect(_on_update_resonance)
@@ -65,7 +70,7 @@ func set_default_wave_travel_distance(travel_distance:float) -> void:
 	(default_wave_resource as WaveData).travel_distane = travel_distance
 
 func reset_activated_wave_travel_distance() -> void:
-	if not activated_wave: return
+	if !activated_wave: return 
 	activated_wave.travel_distane = default_travel_distance
 
 func get_wave_particles() -> WaveEffectParticles:
@@ -75,7 +80,11 @@ func emit_wave_at_point(pos: Vector2, needActivatedData:bool = false, direction:
 	var activated_wave = get_activated_wave_data()
 	var wave_data = activated_wave if needActivatedData && activated_wave else get_wave_data()
 	active_wave_effect =  WavePool.obtain(self as Node2D) as Node2D
-	if !needActivatedData: default_wave_resource.direction = direction
+	if needActivatedData && !activated_wave: wave_data.travel_distane = default_travel_distance
+	if !needActivatedData: 
+		direction = direction.rotated(-global_rotation)
+		wave_data.direction = direction
+		default_wave_resource.direction = direction
 	active_wave_effect.init_from_pool(self as Node2D, wave_data, pos, direction, needCollision)
 	if audio_player: audio_player.volume_db = listen_volume	
 
@@ -89,8 +98,11 @@ func stop_emitting_wave() -> void:
 	if audio_player: audio_player.volume_db = _default_volume
 
 func _on_start_resonance(area: Area2D, particle_mat: ShaderMaterial) -> void:
-	if (area == self && resonance_effect):
+	if area != self: return
+	if resonance_effect:
 		resonance_effect.start_resonance(particle_mat)
+		for feedback in resonance_feedback:
+			feedback.lifetime = 0.3
 		
 func _on_update_resonance(area: Area2D, particle_mat: ShaderMaterial, delta:float) -> void:
 	if (area == self && resonance_effect):
@@ -99,5 +111,7 @@ func _on_update_resonance(area: Area2D, particle_mat: ShaderMaterial, delta:floa
 func _on_stop_resonance(area: Area2D, particle_mat: ShaderMaterial) -> void:
 	if (area == self && resonance_effect):
 		resonance_effect.stop_resonance(particle_mat)
+		for feedback in resonance_feedback:
+			feedback.lifetime = 4.0
 		
 	

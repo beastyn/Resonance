@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MultilineDescription" load_steps=2 format=3 uid="uid://nfn0600lj66d"]
+
+[ext_resource type="Script" uid="uid://4m111njyrqif" path="res://scripts/data/multiline_description.gd" id="1_xvrlm"]
+
+[resource]
+script = ExtResource("1_xvrlm")
+description = "So... Resonance with the original wave gives my some related effect... Huh, who would thought that I, of all people, can have abilities."
+metadata/_custom_type_script = "uid://4m111njyrqif"

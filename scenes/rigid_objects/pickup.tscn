@@ -1,15 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1ncoxkgvw65s"]
+[gd_scene load_steps=12 format=3 uid="uid://b1ncoxkgvw65s"]
 
 [ext_resource type="Texture2D" uid="uid://ecdtmjaoia6c" path="res://assets/tileset_sheet.png" id="1_vvvhx"]
 [ext_resource type="Shader" uid="uid://dt3sqcbbucu3c" path="res://assets/infected-sprite.gdshader" id="1_wbjuo"]
 [ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="2_bu3is"]
 [ext_resource type="Resource" uid="uid://cxl0etsrlpt7f" path="res://scripts/data/waves/pickup_wave.tres" id="4_0sue6"]
+[ext_resource type="Texture2D" uid="uid://dsclxdr0e63r1" path="res://assets/wave_particle.png" id="5_0sue6"]
 [ext_resource type="Script" uid="uid://5i2rs3kbd04a" path="res://scripts/effects/pick_up_resonance.gd" id="5_o8oqt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3uio"]
 shader = ExtResource("1_wbjuo")
 shader_parameter/tint_color = Color(0.62352943, 0.43529412, 0.2, 0.7490196)
-shader_parameter/mix_tint = 0.60400002869
+shader_parameter/mix_tint = 0.0
 shader_parameter/side_top = 1.0
 shader_parameter/side_right = 1.0
 shader_parameter/side_bottom = 1.0
@@ -18,20 +19,24 @@ shader_parameter/thickness_px = 8.0
 shader_parameter/soften_px = 2.7830001321925
 shader_parameter/pulse_speed = 10.29600048906
 shader_parameter/pulse_freq = 5.70400017594
-shader_parameter/pulse_amp = 0.02
+shader_parameter/pulse_amp = 0.07999999821186
 shader_parameter/edge_fade = 2.8690001362775
 shader_parameter/noise_seed = 2.7830001321925
 shader_parameter/distortion_strength = 7.35200034922
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bu3is"]
 atlas = ExtResource("1_vvvhx")
-region = Rect2(1200, 800, 200, 200)
+region = Rect2(800, 1800, 200, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68w4t"]
 size = Vector2(198, 195)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n3uio"]
 size = Vector2(196, 194)
+
+[sub_resource type="Curve" id="Curve_o8oqt"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5221843, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.02228415), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [node name="Pickup" type="RigidBody2D"]
 
@@ -43,13 +48,30 @@ texture = SubResource("AtlasTexture_bu3is")
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_68w4t")
 
-[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect") instance=ExtResource("2_bu3is")]
+[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect", "resonance_feedback") instance=ExtResource("2_bu3is")]
 default_wave_resource = ExtResource("4_0sue6")
 resonance_effect = NodePath("PickupResonance")
+resonance_feedback = [NodePath("CollisionShape2D/ResonanceFeedback")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_n3uio")
+
+[node name="ResonanceFeedback" type="CPUParticles2D" parent="WaveArea/CollisionShape2D"]
+amount = 4
+texture = ExtResource("5_0sue6")
+lifetime = 4.0
+emission_shape = 3
+emission_rect_extents = Vector2(100, 100)
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+angular_velocity_min = 100.0
+angular_velocity_max = 200.0
+scale_amount_curve = SubResource("Curve_o8oqt")
+color = Color(0.7364719, 0.7298191, 0.70016444, 1)
 
 [node name="PickupResonance" type="Node" parent="WaveArea" node_paths=PackedStringArray("pickup_rigidbody")]
 script = ExtResource("5_o8oqt")

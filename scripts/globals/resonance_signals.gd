@@ -19,3 +19,5 @@ signal stop_destruction_resonance()
 signal start_pickup_resonance()
 signal update_pickup_resonance()
 signal stop_pickup_resonance()
+
+signal destroyed_by_resonance(object_groups: Array[StringName])

@@ -1,4 +1,7 @@
 extends Node
+class_name EnemyManager
+
+@onready var scene_manager: SceneManager = %SceneManager
 
 @export var enemy: Enemy
 @export var main_target: Node2D
@@ -8,11 +11,12 @@ extends Node
 @export var cutscene_spawn_pos: Node2D
 @export var cutscene_target: Node2D
 
-
 var _wait_spawn: bool = false
+var _was_spawn: = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	start_custscene()
+	scene_manager.need_enemy.connect(_on_need_enemy)
 	
 func _process(delta: float) -> void:
 	if !enemy: return		
@@ -34,4 +38,11 @@ func _on_timer_timeout() -> void:
 func start_custscene() -> void:
 	enemy.set_target(cutscene_target)
 	enemy.appear_and_attack(cutscene_spawn_pos)
+	
+func _on_need_enemy() -> void:
+	if _was_spawn: return
+	_wait_spawn = true
+	enemy.set_target(main_target)
+	_was_spawn = true
+	
 	

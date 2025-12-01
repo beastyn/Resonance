@@ -1,18 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://spuqigshbkrh"]
+[gd_scene load_steps=13 format=3 uid="uid://spuqigshbkrh"]
 
 [ext_resource type="Texture2D" uid="uid://ecdtmjaoia6c" path="res://assets/tileset_sheet.png" id="1_653k3"]
 [ext_resource type="Shader" uid="uid://dt3sqcbbucu3c" path="res://assets/infected-sprite.gdshader" id="1_ahqe8"]
 [ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="1_c5xr7"]
 [ext_resource type="PackedScene" uid="uid://b13atej70rga" path="res://scenes/components/effects/destruction_resonance.tscn" id="2_653k3"]
 [ext_resource type="Resource" uid="uid://nqg1pq8mgpr6" path="res://scripts/data/waves/destroy_wave.tres" id="3_apeoc"]
+[ext_resource type="PackedScene" uid="uid://bpe5ywwwunqtr" path="res://scenes/explosion.tscn" id="6_kt1b3"]
+[ext_resource type="Texture2D" uid="uid://dsclxdr0e63r1" path="res://assets/wave_particle.png" id="7_tbu5n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ahqe8"]
-size = Vector2(200, 291)
+size = Vector2(48, 291)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ahqe8"]
 shader = ExtResource("1_ahqe8")
 shader_parameter/tint_color = Color(0.5411765, 0.07058824, 0.08235294, 0.5137255)
-shader_parameter/mix_tint = 0.570000027075
+shader_parameter/mix_tint = 0.0
 shader_parameter/side_top = 0.3830000181925
 shader_parameter/side_right = 0.430000020425
 shader_parameter/side_bottom = 0.4490000213275
@@ -28,33 +30,59 @@ shader_parameter/distortion_strength = 7.47600035511
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_apeoc"]
 atlas = ExtResource("1_653k3")
-region = Rect2(1201, 304, 199, 299)
+region = Rect2(1201, 304, 47, 299)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r2wx1"]
-size = Vector2(200, 297)
+size = Vector2(49, 291)
+
+[sub_resource type="Curve" id="Curve_ruk7a"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5221843, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.02228415), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [node name="InfectedDoor" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, 1.5)
+position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_ahqe8")
+
+[node name="Explosion" parent="." instance=ExtResource("6_kt1b3")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_ahqe8")
 texture = SubResource("AtlasTexture_apeoc")
 
-[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect") instance=ExtResource("1_c5xr7")]
+[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect", "resonance_feedback") instance=ExtResource("1_c5xr7")]
 default_wave_resource = ExtResource("3_apeoc")
 resonance_effect = NodePath("DestructionResonance")
+resonance_feedback = [NodePath("CollisionShape2D/ResonanceFeedback")]
 
-[node name="DestructionResonance" parent="WaveArea" node_paths=PackedStringArray("parent_node", "sprite") instance=ExtResource("2_653k3")]
+[node name="DestructionResonance" parent="WaveArea" node_paths=PackedStringArray("parent_node", "static_sprite", "destroy_particles") instance=ExtResource("2_653k3")]
 resonance_time = 3.0
 parent_node = NodePath("../..")
-sprite = NodePath("../../Sprite2D")
+static_sprite = NodePath("../../Sprite2D")
 change_speed = 20.0
+destroy_particles = NodePath("../../Explosion")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
-position = Vector2(0, -0.5)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_r2wx1")
+
+[node name="ResonanceFeedback" type="CPUParticles2D" parent="WaveArea/CollisionShape2D"]
+position = Vector2(3, 3)
+rotation = -1.5707964
+amount = 4
+texture = ExtResource("7_tbu5n")
+lifetime = 4.0
+emission_shape = 3
+emission_rect_extents = Vector2(138.135, 15.655)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+angular_velocity_min = 100.0
+angular_velocity_max = 200.0
+scale_amount_curve = SubResource("Curve_ruk7a")
+color = Color(0.7364719, 0.7298191, 0.70016444, 1)

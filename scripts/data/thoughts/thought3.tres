@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MultilineDescription" load_steps=2 format=3 uid="uid://bnsohqlwe7yte"]
+
+[ext_resource type="Script" uid="uid://4m111njyrqif" path="res://scripts/data/multiline_description.gd" id="1_vchfm"]
+
+[resource]
+script = ExtResource("1_vchfm")
+description = "Oh… this wave sounds so beautiful… Interesting. What if I sing along with the original one? I’ll call this RESONANCE - my own spell."
+metadata/_custom_type_script = "uid://4m111njyrqif"

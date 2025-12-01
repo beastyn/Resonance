@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_h5ntc")
 direction = Vector2(1, 0)
-scale_factor = 0.5
+scale_factor = 0.8
 amplitude = 0.0
 travel_distane = 200.0
-color = Color(0.40429035, 0.5916261, 0.71244794, 1)
+color = Color(0.5909364, 0.6900208, 0.6904832, 1)
 metadata/_custom_type_script = "uid://cb0dd6ie4u175"

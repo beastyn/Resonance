@@ -6,7 +6,7 @@
 script = ExtResource("1_w4qac")
 name = "floor"
 direction = Vector2(0, -1)
-scale_factor = 0.5
+scale_factor = 0.8
 amplitude = 20.0
 color = Color(0.36549097, 0.5344848, 0.33129787, 1)
 metadata/_custom_type_script = "uid://cb0dd6ie4u175"

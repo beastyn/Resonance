@@ -1,8 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmu6eg1knl1gl"]
+[gd_scene load_steps=8 format=3 uid="uid://cmu6eg1knl1gl"]
 
 [ext_resource type="Script" uid="uid://de2gr0xl5oyj7" path="res://scripts/title_scene.gd" id="1_6jsh8"]
+[ext_resource type="AudioStream" uid="uid://dwa7ao5gaflmu" path="res://assets/audio/weightless-relaxing-meditative-music-426994.mp3" id="2_faptf"]
+[ext_resource type="Texture2D" uid="uid://dbcns563ubhcv" path="res://assets/title.png" id="2_l8sac"]
+[ext_resource type="FontFile" uid="uid://otgd1ad7ahit" path="res://assets/fonts/RobotoMono-Medium.ttf" id="3_bq8jb"]
+[ext_resource type="AudioStream" uid="uid://dstqgjhwuwbqp" path="res://assets/audio/G5.wav" id="5_bq8jb"]
 
-[node name="TitleScene" type="Control"]
+[sub_resource type="Gradient" id="Gradient_l8sac"]
+offsets = PackedFloat32Array(0.10701107, 1)
+colors = PackedColorArray(0.47058824, 0.74509805, 0.7764706, 1, 0.07058824, 0.019607844, 0.019607844, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bq8jb"]
+gradient = SubResource("Gradient_l8sac")
+fill = 1
+fill_from = Vector2(0.89316237, 0.15811966)
+fill_to = Vector2(0.2777778, 0.45299146)
+
+[node name="TitleScene" type="Control" node_paths=PackedStringArray("bg_player", "button_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,22 +24,73 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6jsh8")
+bg_player = NodePath("PlayerBG")
+button_player = NodePath("PlayerButtons")
 
-[node name="StartGame" type="Button" parent="."]
-layout_mode = 0
-offset_left = 94.0
-offset_top = 109.0
-offset_right = 309.0
-offset_bottom = 163.0
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_l8sac")
+
+[node name="Start" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 86.0
+offset_top = -404.0
+offset_right = 386.0
+offset_bottom = -304.0
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_bq8jb")
+
+[node name="StartGame" type="Button" parent="Start"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_bq8jb")
+theme_override_font_sizes/font_size = 32
 text = "Start Resonate"
 
-[node name="QuitGame" type="Button" parent="."]
-layout_mode = 0
-offset_left = 95.0
-offset_top = 206.0
-offset_right = 310.0
-offset_bottom = 260.0
+[node name="Start2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 86.0
+offset_top = -289.0
+offset_right = 386.0
+offset_bottom = -189.0
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_bq8jb")
+
+[node name="QuitGame" type="Button" parent="Start2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_bq8jb")
+theme_override_font_sizes/font_size = 32
 text = "Quit"
 
-[connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]
-[connection signal="pressed" from="QuitGame" to="." method="_on_quit_game_pressed"]
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+
+[node name="PlayerBG" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_faptf")
+volume_db = -10.847
+autoplay = true
+
+[node name="PlayerButtons" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_bq8jb")
+
+[connection signal="pressed" from="Start/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="Start2/QuitGame" to="." method="_on_quit_game_pressed"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpe5ywwwunqtr"]
+
+[ext_resource type="Texture2D" uid="uid://dsclxdr0e63r1" path="res://assets/wave_particle.png" id="1_17npe"]
+
+[node name="Explosion" type="CPUParticles2D"]
+emitting = false
+amount = 20
+texture = ExtResource("1_17npe")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.86
+local_coords = true
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 600.0
+angular_velocity_min = 321.02
+angular_velocity_max = 321.02
+scale_amount_max = 1.5

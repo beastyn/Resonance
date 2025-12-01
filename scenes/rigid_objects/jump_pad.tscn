@@ -1,9 +1,28 @@
-[gd_scene load_steps=10 format=3 uid="uid://crm5trnpie2jx"]
+[gd_scene load_steps=14 format=3 uid="uid://crm5trnpie2jx"]
 
+[ext_resource type="Shader" uid="uid://dt3sqcbbucu3c" path="res://assets/infected-sprite.gdshader" id="1_r0qgo"]
 [ext_resource type="Texture2D" uid="uid://ecdtmjaoia6c" path="res://assets/tileset_sheet.png" id="1_vp5kq"]
 [ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="2_561ps"]
 [ext_resource type="Resource" uid="uid://dvo003jj34rxm" path="res://scripts/data/waves/floor_wave.tres" id="3_hx88f"]
 [ext_resource type="Script" uid="uid://c3y6mjv6ttd4c" path="res://scripts/effects/fly_resonance.gd" id="4_0wd0p"]
+[ext_resource type="Texture2D" uid="uid://dsclxdr0e63r1" path="res://assets/wave_particle.png" id="4_r0qgo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mrjdl"]
+shader = ExtResource("1_r0qgo")
+shader_parameter/tint_color = Color(0.6, 0.4, 1, 0.22)
+shader_parameter/mix_tint = 0.0
+shader_parameter/side_top = 1.0
+shader_parameter/side_right = 1.0
+shader_parameter/side_bottom = 1.0
+shader_parameter/side_left = 1.0
+shader_parameter/thickness_px = 8.0
+shader_parameter/soften_px = 4.0
+shader_parameter/pulse_speed = 28.1310013362225
+shader_parameter/pulse_freq = 4.313000109867501
+shader_parameter/pulse_amp = 0.06000000285
+shader_parameter/edge_fade = 0.85
+shader_parameter/noise_seed = 1.2240000581400001
+shader_parameter/distortion_strength = 6.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_561ps"]
 atlas = ExtResource("1_vp5kq")
@@ -14,6 +33,10 @@ size = Vector2(200, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0qgo"]
 size = Vector2(199, 62)
+
+[sub_resource type="Curve" id="Curve_mrjdl"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5221843, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.02228415), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Curve" id="Curve_hx88f"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.99999, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
@@ -26,19 +49,38 @@ point_count = 2
 [node name="JumpPad" type="RigidBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_mrjdl")
 texture = SubResource("AtlasTexture_561ps")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_wkmig")
 
-[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect") instance=ExtResource("2_561ps")]
+[node name="WaveArea" parent="." node_paths=PackedStringArray("resonance_effect", "resonance_feedback") instance=ExtResource("2_561ps")]
 default_wave_resource = ExtResource("3_hx88f")
 resonance_effect = NodePath("FlyEffect")
+resonance_feedback = [NodePath("CollisionShape2D/ResonanceFeedback")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
 position = Vector2(-0.5, 2)
 shape = SubResource("RectangleShape2D_r0qgo")
+
+[node name="ResonanceFeedback" type="CPUParticles2D" parent="WaveArea/CollisionShape2D"]
+position = Vector2(2, -19)
+amount = 4
+texture = ExtResource("4_r0qgo")
+lifetime = 4.0
+emission_shape = 3
+emission_rect_extents = Vector2(99.695, 15.655)
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+angular_velocity_min = 100.0
+angular_velocity_max = 200.0
+scale_amount_curve = SubResource("Curve_mrjdl")
+color = Color(0.7364719, 0.7298191, 0.70016444, 1)
 
 [node name="FlyEffect" type="Node" parent="WaveArea"]
 script = ExtResource("4_0wd0p")

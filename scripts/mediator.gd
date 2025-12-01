@@ -4,13 +4,20 @@ class_name Mediator
 #@export var limited_follower_component: LimitesCursorFollowerBehaviour
 @export var limited_phys_follower_component: LimitedPhysCursorFollower
 @export var listen_action_component: ListenActionComponent
+@export var sing_component: SingActionComponent
 @export var replicate_wave_component: ReplicateWaveComponent
 @export var audio_component: AudioComponent
 @export var sprite: AnimatedSprite2D
+@export var animator: AnimationPlayer
 
 @export var limit_center: Node2D
 
 var _can_move: bool = true
+
+func is_mediator_listening() -> bool:
+	return listen_action_component.is_mediator_listening()
+func is_mediator_singing() -> bool:
+	return sing_component.is_mediator_singing()
 
 func _ready() -> void:
 	#limited_follower_component.set_limit_center(limit_center)
@@ -21,6 +28,9 @@ func _ready() -> void:
 	replicate_wave_component.need_replica_wave.connect(_on_need_replica_wave)
 	replicate_wave_component.remove_replica_wave.connect(_on_remove_replica_wave)
 	replicate_wave_component.save_replica_wave.connect(_on_save_replica_wave)
+	
+	PlayerSignals.want_to_sing.connect(_on_want_to_sing)
+	PlayerSignals.want_to_stop_sing.connect(_on_want_to_stop_sing)
 
 func _process(delta: float) -> void:
 	#if can_move: limited_follower_component.move_follower(self, delta)
@@ -45,11 +55,16 @@ func _on_listening_wave(wave_area : WaveArea, wave_data: WaveData, pos: Vector2)
 	wave_area.emit_wave_at_point(pos, false, (global_position-pos).normalized())
 	replicate_wave_component.set_target_wave_data(wave_data, (global_position-pos).normalized())
 	_can_move = false
+	PlayerSignals.emit_signal("mediator_is_listening")
+	animator.play("listen")
+	
 	
 func _on_stop_listening_wave(wave_area: WaveArea) -> void:
 	wave_area.stop_emitting_wave()	
 	replicate_wave_component.stop_replica_wave()
 	_can_move = true
+	PlayerSignals.emit_signal("mediator_stopped_listening")
+	animator.play("idle")
 	
 func _on_need_replica_wave(wave_area: WaveArea, wave_data: WaveData, pos: Vector2, direction: Vector2) -> void:	
 	wave_area.emit_wave_at_point(wave_area.global_position, false, direction)
@@ -75,3 +90,10 @@ func _rotate_sprite()-> void:
 	else:
 		sprite.flip_h = false
 		sprite.rotation = angle
+
+func _on_want_to_sing(pos: Vector2) -> void:
+	animator.play("sing")
+	
+
+func _on_want_to_stop_sing() -> void:
+	animator.play("idle")

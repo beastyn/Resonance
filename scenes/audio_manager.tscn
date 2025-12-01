@@ -9,7 +9,7 @@
 
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_8qd8g")
-collections = Dictionary[int, ExtResource("2_liach")]({
+collections = Dictionary[Variant, ExtResource("2_liach")]({
 0: ExtResource("3_3asnw"),
 1: ExtResource("4_aoitu"),
 2: ExtResource("5_njtn3"),

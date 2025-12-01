@@ -1,6 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://bbr7rvs1wsw1w"]
+[gd_scene load_steps=34 format=3 uid="uid://bbr7rvs1wsw1w"]
 
 [ext_resource type="Script" uid="uid://ks0v2vab01b5" path="res://scripts/mediator.gd" id="1_xwoyl"]
+[ext_resource type="Script" uid="uid://nrljxdxhyp1e" path="res://scripts/ui/indicators_ui.gd" id="2_pbixv"]
+[ext_resource type="Texture2D" uid="uid://jldw0hpja2d6" path="res://assets/hud_sheet.png" id="2_s2ago"]
+[ext_resource type="Resource" uid="uid://bgs86nahntyoy" path="res://scripts/data/wave_icons.tres" id="3_k7xsf"]
 [ext_resource type="Script" uid="uid://bc6ur1byrxr1t" path="res://scripts/components/limited_phys_cursor_follower_component.gd" id="3_lnx73"]
 [ext_resource type="PackedScene" uid="uid://bp12invtmprfu" path="res://scenes/components/listen_action_component.tscn" id="3_m4slx"]
 [ext_resource type="PackedScene" uid="uid://brtgw7u7sisdv" path="res://scenes/components/replicate_wave_component.tscn" id="4_vckn2"]
@@ -9,36 +12,355 @@
 [ext_resource type="Texture2D" uid="uid://bwoq14g7iqsf0" path="res://assets/mediator.png" id="6_mkxtl"]
 [ext_resource type="PackedScene" uid="uid://b3hsk82kmoi5h" path="res://scenes/wave_area.tscn" id="6_vckn2"]
 [ext_resource type="Resource" uid="uid://ciiwojob8ie02" path="res://scripts/data/waves/replica_wave.tres" id="7_mkxtl"]
+[ext_resource type="Texture2D" uid="uid://cadt1jrrs0p31" path="res://assets/med_anim.png" id="13_p1w1i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbixv"]
+atlas = ExtResource("2_s2ago")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7xsf"]
+atlas = ExtResource("2_s2ago")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1w1i"]
+atlas = ExtResource("2_s2ago")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="Curve" id="Curve_k7xsf"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.387931), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_p1w1i"]
+offsets = PackedFloat32Array(0.5318352, 1)
+colors = PackedColorArray(0, 0, 0, 0.09411765, 0.67780423, 1.0613923, 1.1044922, 0.35686275)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mkxtl"]
 radius = 22.090721
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lnx73"]
+radius = 10.049875
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_lnx73"]
 atlas = ExtResource("6_mkxtl")
 region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fofvn"]
+atlas = ExtResource("13_p1w1i")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8y67"]
+atlas = ExtResource("13_p1w1i")
+region = Rect2(200, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mecij"]
+atlas = ExtResource("13_p1w1i")
+region = Rect2(400, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w672o"]
+atlas = ExtResource("13_p1w1i")
+region = Rect2(200, 200, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jgwy"]
+atlas = ExtResource("13_p1w1i")
+region = Rect2(0, 400, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0cq8"]
+atlas = ExtResource("13_p1w1i")
+region = Rect2(200, 400, 200, 200)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xwoyl"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lnx73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fofvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8y67")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mecij")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w672o")
+}],
+"loop": true,
+"name": &"listen",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jgwy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0cq8")
+}],
+"loop": true,
+"name": &"sing",
+"speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_lnx73"]
-radius = 10.049875
+[sub_resource type="Animation" id="Animation_hifgi"]
+resource_name = "idle"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:sprite_frames")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_xwoyl")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 3]
+}
 
-[node name="Mediator" type="CharacterBody2D" node_paths=PackedStringArray("limited_phys_follower_component", "listen_action_component", "replicate_wave_component", "audio_component", "sprite")]
+[sub_resource type="Animation" id="Animation_once2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:sprite_frames")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_xwoyl")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_p1w1i"]
+resource_name = "listen"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:sprite_frames")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_xwoyl")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"listen"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_fofvn"]
+resource_name = "sing"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:sprite_frames")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_xwoyl")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"sing"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ie2ca"]
+_data = {
+&"RESET": SubResource("Animation_once2"),
+&"idle": SubResource("Animation_hifgi"),
+&"listen": SubResource("Animation_p1w1i"),
+&"sing": SubResource("Animation_fofvn")
+}
+
+[node name="Mediator" type="CharacterBody2D" node_paths=PackedStringArray("limited_phys_follower_component", "listen_action_component", "sing_component", "replicate_wave_component", "audio_component", "sprite", "animator")]
 collision_layer = 16
 script = ExtResource("1_xwoyl")
 limited_phys_follower_component = NodePath("LimitedPhysCursorFollowerComponent")
 listen_action_component = NodePath("ListenActionComponent")
+sing_component = NodePath("SingActionComponent")
 replicate_wave_component = NodePath("ReplicateWaveComponent")
 audio_component = NodePath("AudioComponent")
 sprite = NodePath("AnimatedSprite2D")
+animator = NodePath("AnimationPlayer")
+
+[node name="IndicatorsUI" type="Control" parent="." node_paths=PackedStringArray("active_wave", "destruction_timer_container", "timer_label")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -22.0
+offset_top = -49.0
+offset_right = 18.0
+offset_bottom = -9.0
+script = ExtResource("2_pbixv")
+waves_icons = ExtResource("3_k7xsf")
+active_wave = NodePath("HBoxContainer2/ActiveWave")
+destruction_timer_container = NodePath("HBoxContainer2/DestructionTimer")
+timer_label = NodePath("HBoxContainer2/DestructionTimer/Label")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="IndicatorsUI"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -19.0
+offset_right = 12.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+
+[node name="ActiveWave" type="TextureRect" parent="IndicatorsUI/HBoxContainer2"]
+visible = false
+layout_mode = 2
+texture = SubResource("AtlasTexture_pbixv")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="IndicatorsUI/HBoxContainer2/ActiveWave"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+texture = SubResource("AtlasTexture_k7xsf")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="DestructionTimer" type="TextureRect" parent="IndicatorsUI/HBoxContainer2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_p1w1i")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="IndicatorsUI/HBoxContainer2/DestructionTimer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -10.0
+offset_right = 8.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 14
+text = "10"
+horizontal_alignment = 1
 
 [node name="LimitedPhysCursorFollowerComponent" type="Node" parent="."]
 script = ExtResource("3_lnx73")
@@ -46,7 +368,24 @@ speed = 350.0
 acceleration = 10.0
 target_smooth_speed = 1.0
 
-[node name="ListenActionComponent" parent="." instance=ExtResource("3_m4slx")]
+[node name="ListenActionComponent" parent="." node_paths=PackedStringArray("beam_line", "beam_timer") instance=ExtResource("3_m4slx")]
+beam_line = NodePath("Beam")
+beam_timer = NodePath("Timer")
+beam_duration = 0.2
+
+[node name="Timer" type="Timer" parent="ListenActionComponent"]
+
+[node name="Beam" type="Line2D" parent="ListenActionComponent"]
+z_index = 3
+scale = Vector2(1, 0.897)
+points = PackedVector2Array(9, 1, 34, -60)
+width = 20.0
+width_curve = SubResource("Curve_k7xsf")
+default_color = Color(0.68235296, 0.654902, 0.65882355, 1)
+gradient = SubResource("Gradient_p1w1i")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="ReplicateWaveComponent" parent="." node_paths=PackedStringArray("area_to_spawn_replica") instance=ExtResource("4_vckn2")]
 area_to_spawn_replica = NodePath("../WaveArea")
@@ -56,33 +395,37 @@ amplitude_change_step = 5.0
 script = ExtResource("5_mkxtl")
 area_to_sing_from = NodePath("../WaveArea")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 18)
+shape = SubResource("CircleShape2D_mkxtl")
+
+[node name="WaveArea" parent="." instance=ExtResource("6_vckn2")]
+position = Vector2(9, 22)
+collision_layer = 8
+default_wave_resource = ExtResource("7_mkxtl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
+position = Vector2(2, 2)
+shape = SubResource("CircleShape2D_lnx73")
+
 [node name="AudioComponent" type="Node2D" parent="." node_paths=PackedStringArray("audio_player")]
 script = ExtResource("6_lnx73")
 audio_player = NodePath("Voice")
 
 [node name="Voice" type="AudioStreamPlayer2D" parent="AudioComponent"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, 17)
-shape = SubResource("CircleShape2D_mkxtl")
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ie2ca")
+}
+autoplay = "idle"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_xwoyl")
 animation = &"idle"
 
-[node name="WaveArea" parent="." instance=ExtResource("6_vckn2")]
-position = Vector2(9, 22)
-collision_layer = 8
-default_wave_resource = ExtResource("7_mkxtl")
-default_travel_distance = 200.0
-listen_volume = 0.0
-volume_delta = 0.2
-pitch_delta = 0.05
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WaveArea"]
-position = Vector2(2, 2)
-shape = SubResource("CircleShape2D_lnx73")
-
-[node name="AudioListener2D" type="AudioListener2D" parent="."]
-current = true
+[connection signal="timeout" from="ListenActionComponent/Timer" to="ListenActionComponent" method="_on_timer_timeout"]

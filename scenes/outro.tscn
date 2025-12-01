@@ -1,0 +1,303 @@
+[gd_scene load_steps=22 format=3 uid="uid://e3eyfqo0ijgd"]
+
+[ext_resource type="Script" uid="uid://gnwb8073wgr2" path="res://scripts/intro.gd" id="1_ya6b3"]
+[ext_resource type="Texture2D" uid="uid://c48nm3eprbvg5" path="res://assets/intro/bg.png" id="2_611wi"]
+[ext_resource type="Texture2D" uid="uid://c20x1f7gn0b1x" path="res://assets/intro/cloud1.png" id="3_0b11s"]
+[ext_resource type="Texture2D" uid="uid://6ob1psse45hp" path="res://assets/intro/cloud2.png" id="4_7nwcv"]
+[ext_resource type="FontFile" uid="uid://otgd1ad7ahit" path="res://assets/fonts/RobotoMono-Medium.ttf" id="5_goj31"]
+[ext_resource type="AudioStream" uid="uid://vn8ye65txlyl" path="res://assets/audio/letting-go-441822.mp3" id="6_27hq1"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wfs7u"]
+texture = ExtResource("2_611wi")
+
+[sub_resource type="Animation" id="Animation_4bx60"]
+length = 10.0
+
+[sub_resource type="Animation" id="Animation_yjqpq"]
+resource_name = "appear_run"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 2.0333333, 4.0666666, 6.0333333, 7.9333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(175, 129), Vector2(175, 100), Vector2(175, 116), Vector2(175, 62), Vector2(175, 129)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i2l1n"]
+_data = {
+&"RESET": SubResource("Animation_4bx60"),
+&"appear_run": SubResource("Animation_yjqpq")
+}
+
+[sub_resource type="Animation" id="Animation_bu1yb"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_0naf5"]
+resource_name = "appear_run"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 2, 4.0666666, 6.1, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(697.395, 104.31), Vector2(697, 59), Vector2(697, 110), Vector2(697, 97), Vector2(697.395, 104.31)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t1qkj"]
+_data = {
+&"RESET": SubResource("Animation_bu1yb"),
+&"appear_run": SubResource("Animation_0naf5")
+}
+
+[sub_resource type="Animation" id="Animation_37iue"]
+length = 8.0
+
+[sub_resource type="Animation" id="Animation_272cy"]
+resource_name = "appear_run"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 2.0666666, 4.0666666, 6.0666666, 8.066667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1225.995, 122.5), Vector2(1226, 134), Vector2(1226, 106), Vector2(1226, 84), Vector2(1225.995, 122.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n6p8m"]
+_data = {
+&"RESET": SubResource("Animation_37iue"),
+&"appear_run": SubResource("Animation_272cy")
+}
+
+[sub_resource type="Animation" id="Animation_wfs7u"]
+length = 8.0
+
+[sub_resource type="Animation" id="Animation_i2l1n"]
+resource_name = "appear_run"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 2.0333333, 3.9, 5.9333334, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1735, 118.00001), Vector2(1735, 104), Vector2(1735, 133), Vector2(1735, 116), Vector2(1735, 118.00001)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_es01l"]
+_data = {
+&"RESET": SubResource("Animation_wfs7u"),
+&"appear_run": SubResource("Animation_i2l1n")
+}
+
+[sub_resource type="Gradient" id="Gradient_wfs7u"]
+offsets = PackedFloat32Array(0, 0.36900368, 0.5461255, 0.7269373, 1)
+colors = PackedColorArray(0.28235295, 0.13725491, 0.047058824, 0, 0.1967768, 0.10872953, 0.037550364, 0.599033, 0.1764706, 0.101960786, 0.03529412, 0.7411765, 0.20501962, 0.11184314, 0.038588237, 0.53364706, 0.2784314, 0.13725491, 0.047058824, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_es01l"]
+gradient = SubResource("Gradient_wfs7u")
+
+[node name="Outro" type="Control" node_paths=PackedStringArray("timer", "phrases", "player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ya6b3")
+timer = NodePath("Timer")
+phrases = {
+NodePath("Panel/MarginContainer/phrase1"): 5.0,
+NodePath("Panel/MarginContainer/phrase2"): 5.0,
+NodePath("Panel/MarginContainer/phrase3"): 5.0,
+NodePath("Panel/MarginContainer/phrase4"): 5.0,
+NodePath("Panel/MarginContainer/phrase5"): 5.0
+}
+text_delay_appear = 1.0
+player = NodePath("AudioStreamPlayer2D")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_wfs7u")
+
+[node name="cloud1_1" type="Sprite2D" parent="Panel"]
+position = Vector2(175, 129)
+texture = ExtResource("3_0b11s")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/cloud1_1"]
+libraries = {
+&"": SubResource("AnimationLibrary_i2l1n")
+}
+autoplay = "appear_run"
+
+[node name="cloud2_1" type="Sprite2D" parent="Panel"]
+position = Vector2(697.395, 104.31)
+texture = ExtResource("4_7nwcv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/cloud2_1"]
+libraries = {
+&"": SubResource("AnimationLibrary_t1qkj")
+}
+autoplay = "appear_run"
+
+[node name="cloud 2_2" type="Sprite2D" parent="Panel"]
+position = Vector2(1225.9952, 120.60656)
+texture = ExtResource("4_7nwcv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/cloud 2_2"]
+libraries = {
+&"": SubResource("AnimationLibrary_n6p8m")
+}
+autoplay = "appear_run"
+
+[node name="cloud1_2" type="Sprite2D" parent="Panel"]
+position = Vector2(1735, 118.00001)
+texture = ExtResource("3_0b11s")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/cloud1_2"]
+libraries = {
+&"": SubResource("AnimationLibrary_es01l")
+}
+autoplay = "appear_run"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 300
+theme_override_constants/margin_right = 300
+
+[node name="phrase1" type="TextureRect" parent="Panel/MarginContainer"]
+layout_mode = 2
+texture = SubResource("GradientTexture1D_es01l")
+
+[node name="text" type="RichTextLabel" parent="Panel/MarginContainer/phrase1"]
+layout_mode = 0
+offset_right = 1320.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.60933006, 0.6093302, 0.60932994, 1)
+theme_override_colors/font_shadow_color = Color(0.23576242, 0.109549366, 0.015671048, 0)
+theme_override_fonts/normal_font = ExtResource("5_goj31")
+theme_override_font_sizes/normal_font_size = 26
+text = "And so, our friend escaped his prison — along with the painful fate that bound him."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="phrase2" type="TextureRect" parent="Panel/MarginContainer"]
+layout_mode = 2
+texture = SubResource("GradientTexture1D_es01l")
+
+[node name="text" type="RichTextLabel" parent="Panel/MarginContainer/phrase2"]
+layout_mode = 0
+offset_right = 1320.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.60933006, 0.6093302, 0.60932994, 1)
+theme_override_colors/font_shadow_color = Color(0.23576242, 0.109549366, 0.015671048, 0)
+theme_override_fonts/normal_font = ExtResource("5_goj31")
+theme_override_font_sizes/normal_font_size = 26
+text = "He saw the city consumed by flame and ice, brought forth by its own citizens as they desperately struggled to defeat the approaching threat."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="phrase3" type="TextureRect" parent="Panel/MarginContainer"]
+layout_mode = 2
+texture = SubResource("GradientTexture1D_es01l")
+
+[node name="text" type="RichTextLabel" parent="Panel/MarginContainer/phrase3"]
+layout_mode = 0
+offset_right = 1320.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.60933006, 0.6093302, 0.60932994, 1)
+theme_override_colors/font_shadow_color = Color(0.23576242, 0.109549366, 0.015671048, 0)
+theme_override_fonts/normal_font = ExtResource("5_goj31")
+theme_override_font_sizes/normal_font_size = 26
+text = "But to no avail."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="phrase4" type="TextureRect" parent="Panel/MarginContainer"]
+layout_mode = 2
+texture = SubResource("GradientTexture1D_es01l")
+
+[node name="text" type="RichTextLabel" parent="Panel/MarginContainer/phrase4"]
+layout_mode = 0
+offset_right = 1320.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.60933006, 0.6093302, 0.60932994, 1)
+theme_override_colors/font_shadow_color = Color(0.23576242, 0.109549366, 0.015671048, 0)
+theme_override_fonts/normal_font = ExtResource("5_goj31")
+theme_override_font_sizes/normal_font_size = 26
+text = "What will you do now? Will you become a hero and save everyone?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="phrase5" type="TextureRect" parent="Panel/MarginContainer"]
+layout_mode = 2
+texture = SubResource("GradientTexture1D_es01l")
+
+[node name="text" type="RichTextLabel" parent="Panel/MarginContainer/phrase5"]
+layout_mode = 0
+offset_right = 1320.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.60933006, 0.6093302, 0.60932994, 1)
+theme_override_colors/font_shadow_color = Color(0.23576242, 0.109549366, 0.015671048, 0)
+theme_override_fonts/normal_font = ExtResource("5_goj31")
+theme_override_font_sizes/normal_font_size = 26
+text = "Or will you laughing as your tourmentors slowly dissapear one by one?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_27hq1")
+volume_db = -5.134
+autoplay = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

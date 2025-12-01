@@ -59,7 +59,6 @@ func _on_retract_finished(tentacle: Tentacle) -> void:
 	_target_pos = Vector2.INF
 	set_process(false)
 
-
 func _on_timer_timeout() -> void:
 	for i in range(tentacles.size()):
 		tentacles[i].init_tentacle()

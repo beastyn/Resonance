@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="Resonance"
-run/main_scene="uid://cmu6eg1knl1gl"
+run/main_scene="uid://cnuhftvdfu30l"
+run/print_header=false
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -28,6 +29,10 @@ ResonanceSignals="*res://scripts/globals/resonance_signals.gd"
 AudioManager="*res://scenes/audio_manager.tscn"
 TransitionManager="*res://scripts/globals/transition_manager.gd"
 
+[debug]
+
+shapes/avoidance/2d/obstacles_static_edge_pushin_color=Color(1, 0, 0, 0.59607846)
+
 [display]
 
 window/size/viewport_width=1920
@@ -40,6 +45,8 @@ window/stretch/scale_mode="integer"
 
 wave_areas=""
 player=""
+finish_trigger=""
+thought1=""
 
 [input]
 
@@ -138,4 +145,3 @@ wave_force_down={
 
 textures/canvas_textures/default_texture_filter=0
 viewport/hdr_2d=true
-anti_aliasing/quality/msaa_2d=2
